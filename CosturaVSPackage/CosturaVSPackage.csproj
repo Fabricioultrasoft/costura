@@ -180,6 +180,7 @@
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
     <Content Include="Resources\Package.ico" />
+    <Content Include="Resources\PreviewImage.png" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="ConfigureWindow.xaml">

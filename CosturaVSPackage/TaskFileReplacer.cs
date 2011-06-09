@@ -73,15 +73,16 @@ namespace CosturaVSPackage
                                 var fileContainsDirectory = allText.Any(x => string.Equals(x, directoryInfo.FullName, StringComparison.InvariantCultureIgnoreCase));
                                 if (!fileContainsDirectory)
                                 {
-                                    errorDisplayer.ShowInfo(string.Format("MergeTask: Restart of Visual Studio required to update '{0}'.", Path.Combine(directoryInfo.FullName, "MergeTask.dll")));
+                                    errorDisplayer.ShowInfo(string.Format("Costura: Restart of Visual Studio required to update '{0}'.", Path.Combine(directoryInfo.FullName, "Costura.dll")));
                                     File.AppendAllText(taskFilePath, directoryInfo.FullName + "\r\n");
                                 }
                             });
         }
+
         static void WrapInMutex(Action action)
         {
             bool createdNew;
-            using (new Mutex(true, "813d3b70-f5d6-4f4e-9451-fb06b38aee46", out createdNew))
+            using (new Mutex(true, typeof(TaskFileReplacer).FullName, out createdNew))
             {
                 if (!createdNew)
                 {

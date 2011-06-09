@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassLibraryToReference\ClassLibraryToReference.csproj">
@@ -54,9 +53,9 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <UsingTask TaskName="MergeTask.EmbedTask" AssemblyFile="$(SolutionDir)ForSample\MergeTask.dll" />
+  <UsingTask TaskName="Costura.EmbedTask" AssemblyFile="$(SolutionDir)ForSample\Costura.dll" />
   <Target Name="AfterBuild">
-    <MergeTask.EmbedTask />
+    <Costura.EmbedTask />
     <Delete Files="$(TargetDir)\ClassLibraryToReference.dll" />
     <Delete Files="$(TargetDir)\ClassLibraryToReference.pdb" />
   </Target>

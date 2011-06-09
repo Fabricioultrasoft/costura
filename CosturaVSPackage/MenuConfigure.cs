@@ -76,14 +76,24 @@ namespace CosturaVSPackage
 
         static bool ContainsEmbedTask(Project project)
         {
+            string fullName;
+            try
+            {
+                fullName = project.FullName;
+            }
+            catch (NotImplementedException)
+            {
+                //HACK: can happen during an upgrade from VS 2008
+                return false;
+            }
             try
             {
                 //HACK: for when VS incorrectly calls configure when no project is avaliable
-                if (string.IsNullOrWhiteSpace(project.FileName))
+                if (string.IsNullOrWhiteSpace(fullName))
                 {
                     return false;
                 }
-                var xDocument = XDocument.Load(project.FileName);
+                var xDocument = XDocument.Load(fullName);
                 var target = xDocument.BuildDescendants("Target")
                     .Where(x => string.Equals((string)x.Attribute("Name"), "AfterCompile", StringComparison.InvariantCultureIgnoreCase)
                     ).FirstOrDefault();
@@ -91,11 +101,11 @@ namespace CosturaVSPackage
                 {
                     return false;
                 }
-                return target.BuildDescendants("MergeTask.EmbedTask").Count() > 0;
+                return target.BuildDescendants("Costura.EmbedTask").Count() > 0;
             }
             catch (Exception exception)
             {
-                throw new Exception(string.Format("Could not check project '{0}' for weaving task", project.FileName), exception);
+                throw new Exception(string.Format("Could not check project '{0}' for weaving task", fullName), exception);
             }
         }
     }

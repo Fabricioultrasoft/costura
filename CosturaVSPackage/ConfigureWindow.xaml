@@ -16,14 +16,14 @@
 
                 <StackPanel>
                     <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap">
-                        This is the location where the assembly containing the MergeTask (MergeTask.dll) is stored.<LineBreak/> 
+                        This is the location where the assembly containing the Costura (Costura.dll) is stored.<LineBreak/> 
                         The recommended approach is to prefix the location with "$(SolutionDir)" and hence make it relative to the solution directory.<LineBreak/> 
                         The environment variables "$(SolutionDir)" and "$(ProjectDir)" are allowed.
                     </TextBlock>
                     <StackPanel Orientation="Horizontal" Width="Auto" HorizontalAlignment="Stretch">
                         <TextBlock>Tools directory:</TextBlock>
                         <TextBox Grid.Column="1" 
-                 Text="{Binding Path=ToolsDirectory, UpdateSourceTrigger=PropertyChanged}" ToolTip="The directory to store the build task 'MergeTask.dll'." Width="301" />
+                 Text="{Binding Path=ToolsDirectory, UpdateSourceTrigger=PropertyChanged}" ToolTip="The directory to store the build task 'Costura.dll'." Width="301" />
                         <Button Content="Default" Click="SetDefaultToolsDirectory"  />
                     </StackPanel>
                 </StackPanel>

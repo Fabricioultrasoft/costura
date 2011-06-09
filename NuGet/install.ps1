@@ -27,7 +27,7 @@ $resourceExporter.ExportTask($buildTaskDir)
 
 $projectInjector = New-Object CosturakVsPackage.ProjectInjector
 $projectInjector.ToolsDirectory = "`$(SolutionDir)Tools"
-$projectInjector.ProjectFile = $project.FileName 
+$projectInjector.ProjectFile = $project.FullName 
 $projectInjector.Execute()
 
 

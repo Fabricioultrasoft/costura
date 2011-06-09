@@ -128,7 +128,7 @@ namespace CosturaVSPackage
             }
 
             var directoryInfo = fullPathResolver.GetFullPath(toolsDirectory, project);
-            var targetFile = new FileInfo(Path.Combine(directoryInfo.FullName, "MergeTask.dll"));
+            var targetFile = new FileInfo(Path.Combine(directoryInfo.FullName, "Costura.dll"));
 
             if (!targetFile.Exists)
             {

@@ -37,7 +37,7 @@ namespace CosturaVSPackage
                 //http://mrpmorris.blogspot.com/2007/05/convert-absolute-path-to-relative-path.html
                 var project = currentProjectFinder.GetCurrentProject();
 
-                var projectReader = new ProjectReader(project.FileName);
+                var projectReader = new ProjectReader(project.FullName);
 
                 var model = new ConfigureWindowModel();
                 var defaulter = new Defaulter();
@@ -83,7 +83,7 @@ namespace CosturaVSPackage
             var defaulter = new Defaulter();
             var projectInjector = new ProjectInjector
                                       {
-                                          ProjectFile = project.FileName
+                                          ProjectFile = project.FullName
                                       };
             defaulter.FromModel(projectInjector, model);
             projectInjector.Execute();

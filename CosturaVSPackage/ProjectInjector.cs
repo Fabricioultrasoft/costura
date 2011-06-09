@@ -29,7 +29,7 @@ namespace CosturaVSPackage
 
             var target = GetOrCreateAfterCompileTarget();
 
-            var weavingTask = target.BuildDescendants("MergeTask.EmbedTask").FirstOrDefault();
+            var weavingTask = target.BuildDescendants("Costura.EmbedTask").FirstOrDefault();
             if (weavingTask != null)
             {
                 weavingTask.Remove();
