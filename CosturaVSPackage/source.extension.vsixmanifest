@@ -6,6 +6,8 @@
     <Version>0.1.0.0</Version>
     <Description xml:space="preserve">Merges the dependencies of a project.</Description>
     <Locale>1033</Locale>
+    <MoreInfoUrl>http://code.google.com/p/costura/</MoreInfoUrl>
+    <License>License.txt</License>
     <InstalledByMsi>false</InstalledByMsi>
     <SupportedProducts>
       <VisualStudio Version="10.0">

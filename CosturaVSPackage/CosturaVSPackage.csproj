@@ -175,6 +175,10 @@
     <None Include="Resources\Images_32bit.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="License.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Resources\Package.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -190,7 +194,7 @@
     <ProjectReference Include="$(SolutionDir)Costura\Costura.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <EmbeddedResource Include="$(SolutionDir)Costura\bin\$(ConfigurationName)\Costura.dll">
+    <EmbeddedResource Include="$(SolutionDir)Costura\bin\$(ConfigurationName)\Merged\Costura.dll">
       <Link>Resources\Costura.dll</Link>
       <InProject>false</InProject>
     </EmbeddedResource>
