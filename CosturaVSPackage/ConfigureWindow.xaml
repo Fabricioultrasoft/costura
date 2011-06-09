@@ -42,8 +42,8 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.ColumnSpan="2" HorizontalAlignment="Left" TextWrapping="Wrap">
                        This is the target assembly to be processed.<LineBreak/> 
-                       Since the task is places in the AfterCompile Task it is effectivly the path to<LineBreak/> 
-                        "obj\Debug\AssmblyName.dll".<LineBreak/> 
+                       Since the task is places in the AfterBuild Task it is effectivly the path to<LineBreak/> 
+                        "bin\Debug\AssmblyName.dll".<LineBreak/> 
                        If you choose to derive this field the variable "@(IntermediateAssembly)" will be extracted from the build engine.
                     </TextBlock>
                     <TextBlock Grid.Row="1">Derive from BuildEngine:</TextBlock>
@@ -66,14 +66,16 @@
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <WrapPanel Grid.Row="2" Grid.Column="1"></WrapPanel>
                     <TextBlock VerticalAlignment="Top" >MessageImportance:</TextBlock>
                     <StackPanel Grid.Column="1"  >
                         <RadioButton IsChecked="{Binding Path=MessageImportance, Converter={StaticResource enumBooleanConverter}, ConverterParameter=High}">High</RadioButton>
                         <RadioButton IsChecked="{Binding Path=MessageImportance, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Normal}">Normal</RadioButton>
                         <RadioButton IsChecked="{Binding Path=MessageImportance, Converter={StaticResource enumBooleanConverter}, ConverterParameter=Low}">Low</RadioButton>
                     </StackPanel>
+                    <TextBlock Grid.Row="1">Overwrite target:</TextBlock>
+                    <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding Path=Overwrite}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="MoreInfo" >
@@ -82,13 +84,13 @@
                         <FlowDocument>
                             <Paragraph>
                                 Home Page:
-                                <VsPackageCommon:HyperlinkEx NavigateUri="http://code.google.com/p/virtuosity">http://code.google.com/p/virtuosity</VsPackageCommon:HyperlinkEx>                            
+                                <VsPackageCommon:HyperlinkEx NavigateUri="http://code.google.com/p/constura">http://code.google.com/p/constura</VsPackageCommon:HyperlinkEx>                            
                                 <LineBreak/>
                                 TaskOptions:
-                                <VsPackageCommon:HyperlinkEx  NavigateUri="http://code.google.com/p/virtuosity/wiki/WeavingTaskOptions">http://code.google.com/p/virtuosity/wiki/WeavingTaskOptions</VsPackageCommon:HyperlinkEx>
+                                <VsPackageCommon:HyperlinkEx NavigateUri="http://code.google.com/p/constura/wiki/WeavingTaskOptions">http://code.google.com/p/constura/wiki/WeavingTaskOptions</VsPackageCommon:HyperlinkEx>
                                 <LineBreak/>
                                 Setup:
-                                <VsPackageCommon:HyperlinkEx  NavigateUri="http://code.google.com/p/virtuosity/wiki/Setup">http://code.google.com/p/virtuosity/wiki/Setup</VsPackageCommon:HyperlinkEx>
+                                <VsPackageCommon:HyperlinkEx NavigateUri="http://code.google.com/p/constura/wiki/Setup">http://code.google.com/p/constura/wiki/Setup</VsPackageCommon:HyperlinkEx>
                             </Paragraph>
                         </FlowDocument>
                     </RichTextBox>

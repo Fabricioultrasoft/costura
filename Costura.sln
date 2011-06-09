@@ -20,6 +20,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SourceBundler", "SourceBund
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosturaVSPackage", "CosturaVSPackage\CosturaVSPackage.csproj", "{38B5FF46-18A8-41A9-AE17-962766E29373}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosturaVSPackageTests", "CosturaVSPackageTests\CosturaVSPackageTests.csproj", "{BCE894C5-8521-4E8B-81A9-D1674224AFE2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,12 @@ Global
 		{38B5FF46-18A8-41A9-AE17-962766E29373}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{38B5FF46-18A8-41A9-AE17-962766E29373}.Release|Any CPU.Build.0 = Release|Any CPU
 		{38B5FF46-18A8-41A9-AE17-962766E29373}.Release|x86.ActiveCfg = Release|Any CPU
+		{BCE894C5-8521-4E8B-81A9-D1674224AFE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE894C5-8521-4E8B-81A9-D1674224AFE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE894C5-8521-4E8B-81A9-D1674224AFE2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BCE894C5-8521-4E8B-81A9-D1674224AFE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE894C5-8521-4E8B-81A9-D1674224AFE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE894C5-8521-4E8B-81A9-D1674224AFE2}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

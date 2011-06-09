@@ -5,12 +5,14 @@ using Microsoft.Build.Framework;
 
 namespace CosturaVSPackage
 {
+
     public class ProjectReader
     {
         string projectFile;
         public string ToolsDirectory { set; get; }
         public string TargetPath { set; get; }
         public MessageImportance? MessageImportance { get; set; }
+        public bool? Overwrite { get; set; }
 
         public ProjectReader(string projectFile)
         {
@@ -40,13 +42,14 @@ namespace CosturaVSPackage
             var children =
                 from target in xDocument.BuildDescendants("Target")
                 let targetName = (string)target.Attribute("Name")
-                where string.Equals(targetName, "AfterCompile", StringComparison.InvariantCultureIgnoreCase)
+                where string.Equals(targetName, "AfterBuild", StringComparison.InvariantCultureIgnoreCase)
 
                 from weavingTask in target.BuildDescendants("Costura.EmbedTask")
                 select new
                            {
                                TargetPath = (string)weavingTask.Attribute("TargetPath"),
                                MessageImportance = ConvertToEnum((string)weavingTask.Attribute("MessageImportance")),
+                               Overwrite = ToBool(weavingTask.Attribute("Overwrite")),
                            };
 
             var first = children.FirstOrDefault();
@@ -56,6 +59,7 @@ namespace CosturaVSPackage
             }
             TargetPath = first.TargetPath;
             MessageImportance = first.MessageImportance;
+            Overwrite = first.Overwrite;
         }
         public static bool? ToBool(XAttribute attribute)
         {

@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="ConfigureWindowModel.cs" />
     <Compile Include="CurrentVersion.cs" />
+    <Compile Include="Defaulter.cs" />
     <Compile Include="DisableMenuConfigure.cs" />
     <Compile Include="FileExporter.cs" />
     <Compile Include="MenuConfigure.cs" />
@@ -208,6 +209,10 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VsSDKInstall)Microsoft.VsSDK.targets" />
+  <UsingTask TaskName="VirtuosityMsBuildTask.WeavingTask" AssemblyFile="$(SolutionDir)Tools\VirtuosityMsBuildTask.dll" />
+  <Target Name="AfterCompile">
+    <VirtuosityMsBuildTask.WeavingTask />
+  </Target>
   <UsingTask TaskName="EnvironmentVariable" AssemblyFile="$(SolutionDir)Tools\msbuild.extension.pack\MSBuild.ExtensionPack.dll" />
   <UsingTask TaskName="MSBuild.Community.Tasks.FileUpdate" AssemblyFile="$(SolutionDir)Tools\MSBuild.Community.Tasks.dll" />
   <Target Name="BeforeBuild" DependsOnTargets="ConfigureVsSDKBuild">

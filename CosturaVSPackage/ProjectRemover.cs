@@ -21,7 +21,7 @@ namespace CosturaVSPackage
         void RemoveWeavingTask()
         {
             xDocument.BuildDescendants("Target")
-                .Where(x => string.Equals((string)x.Attribute("Name"), "AfterCompile", StringComparison.InvariantCultureIgnoreCase))
+                .Where(x => string.Equals((string)x.Attribute("Name"), "AfterBuild", StringComparison.InvariantCultureIgnoreCase))
                 .Descendants(XDocumentExtensions.BuildNamespace + "Costura.EmbedTask").Remove();
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
+using System.IO;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 using WeavingCommon;
@@ -12,6 +13,7 @@ namespace Costura
 {
     public class EmbedTask : Task, IConfig
     {
+        public bool Overwrite { set; get; }
         public string TargetPath { set; get; }
         public string MessageImportance { set; get; }
         public string References { get; set; }
@@ -24,6 +26,7 @@ namespace Costura
         public EmbedTask()
         {
             MessageImportance = "Low";
+            Overwrite = true;
         }
 
         public override bool Execute()
@@ -99,11 +102,23 @@ namespace Costura
                 container.GetExportedValue<ResourceEmbedder>().Execute();
                 
                 container.GetExportedValue<ProjectKeyReader>().Execute();
-                container.GetExportedValue<ModuleWriter>().Execute();
+                var savePath = GetSavePath();
+                container.GetExportedValue<ModuleWriter>().Execute(savePath);
                 
             }
         }
 
+        string GetSavePath()
+        {
+            if (Overwrite)
+            {
+                return TargetPath;
+            }
+            var fileInfo = new FileInfo(TargetPath);
+            var directoryPath = Path.Combine(fileInfo.DirectoryName, "Merged");
+            Directory.CreateDirectory(directoryPath);
+            return Path.Combine(directoryPath , fileInfo.Name);
+        }
     }
 
 }

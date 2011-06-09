@@ -95,7 +95,7 @@ namespace CosturaVSPackage
                 }
                 var xDocument = XDocument.Load(fullName);
                 var target = xDocument.BuildDescendants("Target")
-                    .Where(x => string.Equals((string)x.Attribute("Name"), "AfterCompile", StringComparison.InvariantCultureIgnoreCase)
+                    .Where(x => string.Equals((string)x.Attribute("Name"), "AfterBuild", StringComparison.InvariantCultureIgnoreCase)
                     ).FirstOrDefault();
                 if (target == null)
                 {

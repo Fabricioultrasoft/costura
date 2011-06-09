@@ -19,6 +19,17 @@ namespace CosturaVSPackage
             }
         }
 
+        bool overwrite;
+        public bool Overwrite
+        {
+            get { return overwrite; }
+            set
+            {
+                overwrite = value;
+                OnPropertyChanged("Overwrite");
+            }
+        }
+
         string targetPath;
         public string TargetPath
         {

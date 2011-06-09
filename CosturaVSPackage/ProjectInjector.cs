@@ -12,6 +12,7 @@ namespace CosturaVSPackage
         public string TargetPath { set; get; }
         public string ToolsDirectory { set; get; }
         public MessageImportance? MessageImportance { set; get; }
+        public bool? Overwrite { set; get; }
         public string ProjectFile { set; get; }
         XDocument xDocument;
 
@@ -27,7 +28,7 @@ namespace CosturaVSPackage
         void InjectEmbedTask()
         {
 
-            var target = GetOrCreateAfterCompileTarget();
+            var target = GetOrCreateAfterBuildTarget();
 
             var weavingTask = target.BuildDescendants("Costura.EmbedTask").FirstOrDefault();
             if (weavingTask != null)
@@ -37,6 +38,10 @@ namespace CosturaVSPackage
 
 
             var xAttributes = new List<XAttribute>();
+            if (Overwrite != null)
+            {
+                xAttributes.Add(new XAttribute("Overwrite", Overwrite));
+            }
             if (MessageImportance != null)
             {
                 xAttributes.Add(new XAttribute("MessageImportance", MessageImportance));
@@ -49,13 +54,13 @@ namespace CosturaVSPackage
         }
 
 
-        XElement GetOrCreateAfterCompileTarget()
+        XElement GetOrCreateAfterBuildTarget()
         {
             var target = xDocument.BuildDescendants("Target")
-                .Where(x => string.Equals((string)x.Attribute("Name"), "AfterCompile", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
+                .Where(x => string.Equals((string)x.Attribute("Name"), "AfterBuild", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
             if (target == null)
             {
-                target = new XElement(XDocumentExtensions.BuildNamespace + "Target", new XAttribute("Name", "AfterCompile"));
+                target = new XElement(XDocumentExtensions.BuildNamespace + "Target", new XAttribute("Name", "AfterBuild"));
                 xDocument.Root.Add(target);
             }
             return target;
