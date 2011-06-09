@@ -40,7 +40,7 @@ namespace Costura
 
         private void Embedd(string fullPath)
         {
-            var resource = new EmbeddedResource("WeavingTask." + Path.GetFileName(fullPath), ManifestResourceAttributes.Private, File.ReadAllBytes(fullPath));
+            var resource = new EmbeddedResource("Costura." + Path.GetFileName(fullPath), ManifestResourceAttributes.Private, File.ReadAllBytes(fullPath));
             moduleReader.Module.Resources.Add(resource);
         }
 
@@ -48,7 +48,7 @@ namespace Costura
         {
             if (embedTask.ReferenceCopyLocalPaths == null)
             {
-                return buildEngine.GetEnvironmentVariable("ReferenceCopyLocalPaths", true)
+                return buildEngine.GetEnvironmentVariable("ReferenceCopyLocalPaths", false)
                     .Where(x => x.EndsWith(".dll") || x.EndsWith(".exe"))
                     .ToList();
             }

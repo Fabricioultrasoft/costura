@@ -52,7 +52,7 @@
   <Target 
         Name="AfterBuild">
       <Costura.EmbedTask 
-            TargetPath="@(IntermediateAssembly)"
+            TargetPath="@(TargetPath)"
             Overwrite="true" 
             MessageImportance="High"/>
   </Target>

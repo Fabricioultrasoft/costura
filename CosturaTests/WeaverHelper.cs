@@ -34,7 +34,7 @@ namespace CosturaTests
                                         ProjectFileOfTaskNode = this.projectPath
                                     };
             var referenceCopyLocalPaths = GetCopyLocal().ToList();
-            var weavingTask = new EmbedTask
+            var embedTask = new EmbedTask
                                   {
                                       TargetPath = newAssembly,
                                       BuildEngine = myBuildEngine,
@@ -42,10 +42,10 @@ namespace CosturaTests
                                       ReferenceCopyLocalPaths = referenceCopyLocalPaths
                                   };
 
-            var execute = weavingTask.Execute();
+            var execute = embedTask.Execute();
             if (!execute)
             {
-                throw weavingTask.Exception;
+                throw embedTask.Exception;
             }
 #if (RELEASE)
             foreach (var referenceCopyLocalPath in referenceCopyLocalPaths)

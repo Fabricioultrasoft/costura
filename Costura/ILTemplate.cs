@@ -15,7 +15,7 @@ static class ILTemplate
     public static Assembly OnCurrentDomainOnAssemblyResolve(object sender, ResolveEventArgs args)
     {
         var name = new AssemblyName(args.Name).Name;
-        var assemblyResourceName = string.Format("WeavingTask.{0}.dll", name);
+        var assemblyResourceName = string.Format("Costura.{0}.dll", name);
         var executingAssembly = Assembly.GetExecutingAssembly();
 
         using (var assemblyStream = executingAssembly.GetManifestResourceStream(assemblyResourceName))

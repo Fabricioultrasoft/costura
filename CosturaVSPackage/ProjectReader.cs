@@ -44,12 +44,12 @@ namespace CosturaVSPackage
                 let targetName = (string)target.Attribute("Name")
                 where string.Equals(targetName, "AfterBuild", StringComparison.InvariantCultureIgnoreCase)
 
-                from weavingTask in target.BuildDescendants("Costura.EmbedTask")
+                from embedTask in target.BuildDescendants("Costura.EmbedTask")
                 select new
                            {
-                               TargetPath = (string)weavingTask.Attribute("TargetPath"),
-                               MessageImportance = ConvertToEnum((string)weavingTask.Attribute("MessageImportance")),
-                               Overwrite = ToBool(weavingTask.Attribute("Overwrite")),
+                               TargetPath = (string)embedTask.Attribute("TargetPath"),
+                               MessageImportance = ConvertToEnum((string)embedTask.Attribute("MessageImportance")),
+                               Overwrite = ToBool(embedTask.Attribute("Overwrite")),
                            };
 
             var first = children.FirstOrDefault();

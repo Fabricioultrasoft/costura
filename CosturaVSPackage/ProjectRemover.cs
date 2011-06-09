@@ -14,11 +14,11 @@ namespace CosturaVSPackage
             new FileInfo(projectFile).IsReadOnly = false;
             xDocument = XDocument.Load(projectFile);
             RemoveUsingTask();
-            RemoveWeavingTask();
+            RemoveEmbedTask();
             xDocument.Save(projectFile);
         }
 
-        void RemoveWeavingTask()
+        void RemoveEmbedTask()
         {
             xDocument.BuildDescendants("Target")
                 .Where(x => string.Equals((string)x.Attribute("Name"), "AfterBuild", StringComparison.InvariantCultureIgnoreCase))

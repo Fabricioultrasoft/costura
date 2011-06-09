@@ -44,11 +44,11 @@
                        This is the target assembly to be processed.<LineBreak/> 
                        Since the task is places in the AfterBuild Task it is effectivly the path to<LineBreak/> 
                         "bin\Debug\AssmblyName.dll".<LineBreak/> 
-                       If you choose to derive this field the variable "@(IntermediateAssembly)" will be extracted from the build engine.
+                       If you choose to derive this field the variable "@(TargetPath)" will be extracted from the build engine.
                     </TextBlock>
                     <TextBlock Grid.Row="1">Derive from BuildEngine:</TextBlock>
                     <CheckBox Grid.Column="1"  
-                  IsChecked="{Binding Path=DeriveTargetPathFromBuildEngine, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" ToolTip="Check this if you want to let the WeavingTask derive the TargetPath." />
+                  IsChecked="{Binding Path=DeriveTargetPathFromBuildEngine, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" ToolTip="Check this if you want to let Costura derive the TargetPath." />
 
                     <TextBlock Grid.Row="2">Target Path:</TextBlock>
                     <TextBox Grid.Column="1" 
@@ -84,13 +84,13 @@
                         <FlowDocument>
                             <Paragraph>
                                 Home Page:
-                                <VsPackageCommon:HyperlinkEx NavigateUri="http://code.google.com/p/constura">http://code.google.com/p/constura</VsPackageCommon:HyperlinkEx>                            
+                                <VsPackageCommon:HyperlinkEx NavigateUri="http://code.google.com/p/costura">http://code.google.com/p/costura</VsPackageCommon:HyperlinkEx>                            
                                 <LineBreak/>
                                 TaskOptions:
-                                <VsPackageCommon:HyperlinkEx NavigateUri="http://code.google.com/p/constura/wiki/WeavingTaskOptions">http://code.google.com/p/constura/wiki/WeavingTaskOptions</VsPackageCommon:HyperlinkEx>
+                                <VsPackageCommon:HyperlinkEx NavigateUri="http://code.google.com/p/costura/wiki/OptionsEmbedTask">http://code.google.com/p/costura/wiki/OptionsEmbedTask</VsPackageCommon:HyperlinkEx>
                                 <LineBreak/>
                                 Setup:
-                                <VsPackageCommon:HyperlinkEx NavigateUri="http://code.google.com/p/constura/wiki/Setup">http://code.google.com/p/constura/wiki/Setup</VsPackageCommon:HyperlinkEx>
+                                <VsPackageCommon:HyperlinkEx NavigateUri="http://code.google.com/p/costura/wiki/Setup">http://code.google.com/p/costura/wiki/Setup</VsPackageCommon:HyperlinkEx>
                             </Paragraph>
                         </FlowDocument>
                     </RichTextBox>

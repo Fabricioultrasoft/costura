@@ -30,10 +30,10 @@ namespace CosturaVSPackage
 
             var target = GetOrCreateAfterBuildTarget();
 
-            var weavingTask = target.BuildDescendants("Costura.EmbedTask").FirstOrDefault();
-            if (weavingTask != null)
+            var embedTask = target.BuildDescendants("Costura.EmbedTask").FirstOrDefault();
+            if (embedTask != null)
             {
-                weavingTask.Remove();
+                embedTask.Remove();
             }
 
 

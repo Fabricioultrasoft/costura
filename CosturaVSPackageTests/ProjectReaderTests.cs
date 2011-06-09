@@ -40,7 +40,7 @@ namespace CosturaVSPackageTests
             {
                 var reader = new ProjectReader(targetFileInfo.FullName);
                 Assert.IsTrue(reader.Overwrite.Value);
-                Assert.AreEqual("@(IntermediateAssembly)", reader.TargetPath);
+                Assert.AreEqual("@(TargetPath)", reader.TargetPath);
                 Assert.AreEqual("$(SolutionDir)Tools\\", reader.ToolsDirectory);
                 Assert.AreEqual(MessageImportance.High, reader.MessageImportance);
             }

@@ -41,7 +41,7 @@ namespace CosturaVSPackage
 
         void SetDefaultTargetPath(object sender, RoutedEventArgs e)
         {
-            Model.TargetPath = "@(IntermediateAssembly)";
+            Model.TargetPath = "@(TargetPath)";
         }
 
     }
