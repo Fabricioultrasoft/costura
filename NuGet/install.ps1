@@ -7,7 +7,7 @@ $vsix_exist = test-path -path $path_to_vsix
 
 If (!$vsix_exist) {
 	$DirInfo = New-Object System.IO.DirectoryInfo($Env:VS100COMNTOOLS)
-	$path = [io.path]::Combine($DirInfo.Parent.FileName, "IDE")
+	$path = [io.path]::Combine($DirInfo.Parent.FullName, "IDE")
 	$path = [io.path]::Combine($path, "VSIXInstaller.exe")
 	[Array]$arguments = $toolsPath + "\CosturaVsPackage.vsix"
 	
