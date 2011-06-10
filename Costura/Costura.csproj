@@ -57,12 +57,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DependencyFinder.cs" />
     <Compile Include="ILTemplate.cs" />
     <Compile Include="ModuleLoaderImporter.cs" />
     <Compile Include="EmbedTask.cs" />
     <Compile Include="AssemblyLoaderImporter.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />
+    <Compile Include="ReferenceDeleter.cs" />
     <Compile Include="ResourceEmbedder.cs" />
   </ItemGroup>
   <ItemGroup>

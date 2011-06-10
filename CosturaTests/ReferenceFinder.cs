@@ -115,6 +115,7 @@ namespace CosturaTests
             }
             throw new FileNotFoundException();
         }
+        
         public string Resolve(string assemblyName)
         {
             var file = SearchDirectory(assemblyName);
@@ -124,6 +125,7 @@ namespace CosturaTests
             }
             throw new FileNotFoundException();
         }
+
         string GetAssemblyInGac(AssemblyNameReference reference)
         {
             if ((reference.PublicKeyToken == null) || (reference.PublicKeyToken.Length == 0))

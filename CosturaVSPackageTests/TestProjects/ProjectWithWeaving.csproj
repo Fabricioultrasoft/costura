@@ -54,6 +54,7 @@
       <Costura.EmbedTask 
             TargetPath="@(TargetPath)"
             Overwrite="true" 
+            DeleteReferences="true" 
             MessageImportance="High"/>
   </Target>
 

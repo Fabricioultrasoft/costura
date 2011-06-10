@@ -30,6 +30,17 @@ namespace CosturaVSPackage
             }
         }
 
+        bool deleteReferences;
+        public bool DeleteReferences
+        {
+            get { return deleteReferences; }
+            set
+            {
+                deleteReferences = value;
+                OnPropertyChanged("DeleteReferences");
+            }
+        }
+
         string targetPath;
         public string TargetPath
         {
@@ -75,6 +86,7 @@ namespace CosturaVSPackage
                 OnPropertyChanged("Version");
             }
         }
+
 
         public ConfigureWindowModel()
         {

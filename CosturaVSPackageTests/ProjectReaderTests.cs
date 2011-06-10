@@ -20,6 +20,7 @@ namespace CosturaVSPackageTests
                 var reader = new ProjectReader(targetFileInfo.FullName);
 
                 Assert.IsNull(reader.Overwrite);
+                Assert.IsNull(reader.DeleteReferences);
                 Assert.IsNull(reader.ToolsDirectory);
                 Assert.IsNull(reader.MessageImportance);
                 Assert.IsNull(reader.TargetPath);
@@ -40,6 +41,7 @@ namespace CosturaVSPackageTests
             {
                 var reader = new ProjectReader(targetFileInfo.FullName);
                 Assert.IsTrue(reader.Overwrite.Value);
+                Assert.IsTrue(reader.DeleteReferences.Value);
                 Assert.AreEqual("@(TargetPath)", reader.TargetPath);
                 Assert.AreEqual("$(SolutionDir)Tools\\", reader.ToolsDirectory);
                 Assert.AreEqual(MessageImportance.High, reader.MessageImportance);
@@ -61,7 +63,7 @@ namespace CosturaVSPackageTests
             {
                 var reader = new ProjectReader(targetFileInfo.FullName);
                 Assert.IsNull(reader.Overwrite);
-                Assert.IsNull(reader.TargetPath);
+                Assert.IsNull(reader.DeleteReferences);
                 Assert.IsNull(reader.TargetPath);
                 Assert.AreEqual(@"$(SolutionDir)Tools\", reader.ToolsDirectory);
                 Assert.IsNull(reader.MessageImportance);

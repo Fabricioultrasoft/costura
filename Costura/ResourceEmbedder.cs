@@ -1,8 +1,5 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.Composition;
+﻿using System.ComponentModel.Composition;
 using System.IO;
-using System.Linq;
-using Microsoft.Build.Framework;
 using Mono.Cecil;
 using WeavingCommon;
 
@@ -11,22 +8,19 @@ namespace Costura
     [Export, PartCreationPolicy(CreationPolicy.Shared)]
 	public class ResourceEmbedder
 	{
+        DependencyFinder dependencyFinder;
         ModuleReader moduleReader;
-        EmbedTask embedTask;
-        IBuildEngine buildEngine;
 
         [ImportingConstructor]
-		public ResourceEmbedder(ModuleReader moduleReader, EmbedTask embedTask, IBuildEngine  buildEngine)
+        public ResourceEmbedder(DependencyFinder dependencyFinder, ModuleReader moduleReader)
         {
+            this.dependencyFinder = dependencyFinder;
             this.moduleReader = moduleReader;
-            this.embedTask = embedTask;
-            this.buildEngine = buildEngine;
         }
 
         public void Execute()
 		{
-            var dependencies = GetCopyLocalFiles();
-            foreach (var dependency in dependencies)
+            foreach (var dependency in dependencyFinder.Dependencies)
             {
                 var fullPath = Path.GetFullPath(dependency);
                 Embedd(fullPath);
@@ -44,15 +38,5 @@ namespace Costura
             moduleReader.Module.Resources.Add(resource);
         }
 
-        private List<string> GetCopyLocalFiles()
-        {
-            if (embedTask.ReferenceCopyLocalPaths == null)
-            {
-                return buildEngine.GetEnvironmentVariable("ReferenceCopyLocalPaths", false)
-                    .Where(x => x.EndsWith(".dll") || x.EndsWith(".exe"))
-                    .ToList();
-            }
-            return embedTask.ReferenceCopyLocalPaths;
-        }
 	}
 }

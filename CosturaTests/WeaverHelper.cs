@@ -35,10 +35,11 @@ namespace CosturaTests
                                     };
             var referenceCopyLocalPaths = GetCopyLocal().ToList();
             var embedTask = new EmbedTask
-                                  {
-                                      TargetPath = newAssembly,
-                                      BuildEngine = myBuildEngine,
-                                      References = GetReferences(),
+                                {
+                                    TargetPath = newAssembly,
+                                    BuildEngine = myBuildEngine,
+                                    References = GetReferences(),
+                                    DeleteReferences = false,
                                       ReferenceCopyLocalPaths = referenceCopyLocalPaths
                                   };
 

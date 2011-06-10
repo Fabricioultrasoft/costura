@@ -85,7 +85,5 @@
   <UsingTask TaskName="Costura.EmbedTask" AssemblyFile="$(SolutionDir)ForSample\Costura.dll" />
   <Target Name="AfterBuild">
     <Costura.EmbedTask />
-    <Delete Files="$(TargetDir)\ClassLibraryToReference.dll" />
-    <Delete Files="$(TargetDir)\ClassLibraryToReference.pdb" />
   </Target>
 </Project>

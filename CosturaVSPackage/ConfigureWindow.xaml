@@ -67,6 +67,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock VerticalAlignment="Top" >MessageImportance:</TextBlock>
                     <StackPanel Grid.Column="1"  >
@@ -76,6 +77,8 @@
                     </StackPanel>
                     <TextBlock Grid.Row="1">Overwrite target:</TextBlock>
                     <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding Path=Overwrite}"/>
+                    <TextBlock Grid.Row="2">Delete References:</TextBlock>
+                    <CheckBox Grid.Row="2" Grid.Column="1" IsChecked="{Binding Path=DeleteReferences}"/>
                 </Grid>
             </TabItem>
             <TabItem Header="MoreInfo" >

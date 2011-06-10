@@ -14,6 +14,7 @@ namespace Costura
     public class EmbedTask : Task, IConfig
     {
         public bool Overwrite { set; get; }
+        public bool DeleteReferences { set; get; }
         public string TargetPath { set; get; }
         public string MessageImportance { set; get; }
         public string References { get; set; }
@@ -27,6 +28,7 @@ namespace Costura
         {
             MessageImportance = "Low";
             Overwrite = true;
+            DeleteReferences = true;
         }
 
         public override bool Execute()
@@ -49,7 +51,6 @@ namespace Costura
             {
                 HandleException(exception);
             }
-
             finally
             {
                 stopwatch.Stop();
@@ -81,6 +82,7 @@ namespace Costura
                 container.ComposeExportedValue(this);
                 container.ComposeExportedValue(BuildEngine);
                 container.ComposeExportedValue(logger);
+                CheckForInvalidConfig();
                 container.GetExportedValue<TargetPathFinder>().Execute("TargetPath");
 
                 logger.LogMessage(string.Format("\tTargetPath: {0}", TargetPath));
@@ -99,24 +101,43 @@ namespace Costura
 
                 container.GetExportedValue<AssemblyLoaderImporter>().Execute();
                 container.GetExportedValue<ModuleLoaderImporter>().Execute();
+                container.GetExportedValue<DependencyFinder>().Execute();
                 container.GetExportedValue<ResourceEmbedder>().Execute();
                 
                 container.GetExportedValue<ProjectKeyReader>().Execute();
                 var savePath = GetSavePath();
                 container.GetExportedValue<ModuleWriter>().Execute(savePath);
+                container.GetExportedValue<ReferenceDeleter>().Execute();
                 
+            }
+        }
+
+        void CheckForInvalidConfig()
+        {
+            if (!Overwrite && DeleteReferences)
+            {
+                throw new WeavingException("Overwrite=false and DeleteReferences=true which is an invalid config.");
             }
         }
 
         string GetSavePath()
         {
+            var fileInfo = new FileInfo(TargetPath);
+            var directoryPath = Path.Combine(fileInfo.DirectoryName, "CosturaMerged");
+            //Try to delete directory for cleanup purposes. 
+            try
+            {
+                Directory.Delete(directoryPath, true);
+            }
+            catch (Exception)
+            {
+            }
             if (Overwrite)
             {
                 return TargetPath;
             }
-            var fileInfo = new FileInfo(TargetPath);
-            var directoryPath = Path.Combine(fileInfo.DirectoryName, "Merged");
             Directory.CreateDirectory(directoryPath);
+
             return Path.Combine(directoryPath , fileInfo.Name);
         }
     }

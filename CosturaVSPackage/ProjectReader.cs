@@ -13,6 +13,7 @@ namespace CosturaVSPackage
         public string TargetPath { set; get; }
         public MessageImportance? MessageImportance { get; set; }
         public bool? Overwrite { get; set; }
+        public bool? DeleteReferences { get; set; }
 
         public ProjectReader(string projectFile)
         {
@@ -50,6 +51,7 @@ namespace CosturaVSPackage
                                TargetPath = (string)embedTask.Attribute("TargetPath"),
                                MessageImportance = ConvertToEnum((string)embedTask.Attribute("MessageImportance")),
                                Overwrite = ToBool(embedTask.Attribute("Overwrite")),
+                               DeleteReferences = ToBool(embedTask.Attribute("DeleteReferences")),
                            };
 
             var first = children.FirstOrDefault();
@@ -60,6 +62,7 @@ namespace CosturaVSPackage
             TargetPath = first.TargetPath;
             MessageImportance = first.MessageImportance;
             Overwrite = first.Overwrite;
+            DeleteReferences = first.DeleteReferences;
         }
         public static bool? ToBool(XAttribute attribute)
         {

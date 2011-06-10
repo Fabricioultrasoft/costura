@@ -14,6 +14,8 @@ namespace CosturaVSPackage
         public MessageImportance? MessageImportance { set; get; }
         public bool? Overwrite { set; get; }
         public string ProjectFile { set; get; }
+        public bool? DeleteReferences { get; set; }
+
         XDocument xDocument;
 
         public void Execute()
@@ -41,6 +43,10 @@ namespace CosturaVSPackage
             if (Overwrite != null)
             {
                 xAttributes.Add(new XAttribute("Overwrite", Overwrite));
+            }
+            if (DeleteReferences != null)
+            {
+                xAttributes.Add(new XAttribute("DeleteReferences", DeleteReferences));
             }
             if (MessageImportance != null)
             {
@@ -80,10 +86,6 @@ namespace CosturaVSPackage
                              new XAttribute("TaskName", "Costura.EmbedTask"),
                              new XAttribute("AssemblyFile", Path.Combine(ToolsDirectory, @"Costura.dll"))));
         }
-
-  
-
-        
 
     }
 }
