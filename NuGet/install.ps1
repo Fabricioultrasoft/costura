@@ -7,7 +7,7 @@ $vsix_exist = test-path -path $path_to_vsix
 
 If (!$vsix_exist) {
 	$DirInfo = New-Object System.IO.DirectoryInfo($Env:VS100COMNTOOLS)
-	$path = [io.path]::Combine($DirInfo.Parent.FullName, "IDE")
+	$path = [io.path]::Combine($DirInfo.Parent.FileName, "IDE")
 	$path = [io.path]::Combine($path, "VSIXInstaller.exe")
 	[Array]$arguments = $toolsPath + "\CosturaVsPackage.vsix"
 	
@@ -25,7 +25,7 @@ $buildTaskDir = [System.IO.Path]::Combine($project.Object.DTE.Solution.FullName,
 $resourceExporter = New-Object CosturaVsPackage.FileExporter
 $resourceExporter.ExportTask($buildTaskDir)
 
-$projectInjector = New-Object CosturakVsPackage.ProjectInjector
+$projectInjector = New-Object CosturaVsPackage.ProjectInjector
 $projectInjector.ToolsDirectory = "`$(SolutionDir)Tools"
 $projectInjector.ProjectFile = $project.FullName 
 $projectInjector.Execute()
