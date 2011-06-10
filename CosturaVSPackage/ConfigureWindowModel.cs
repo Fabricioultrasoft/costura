@@ -112,9 +112,14 @@ namespace CosturaVSPackage
                     stringBuilder.AppendLine("TargetPath is required if you have selected DeriveTargetPathFromBuildEngine.");
                 }
             }
+
             if (string.IsNullOrWhiteSpace(ToolsDirectory))
             {
                 stringBuilder.AppendLine("ToolsDirectory is required.");
+            }
+            if (!Overwrite && DeleteReferences)
+            {
+                stringBuilder.AppendLine("Overwrite=false and DeleteReferences=true is invalid because if the new file is copied to a different directory it serves no purpose deleting references.");
             }
             if (stringBuilder.Length == 0)
             {

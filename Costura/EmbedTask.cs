@@ -33,7 +33,7 @@ namespace Costura
 
         public override bool Execute()
         {
-            BuildEngine.LogMessageEvent(new BuildMessageEventArgs("EmbedTask Executing (Change MessageImportance to get more or less info)", "", "EmbedTask", Microsoft.Build.Framework.MessageImportance.High));
+            BuildEngine.LogMessageEvent(new BuildMessageEventArgs("Costura.EmbedTask Executing (Change MessageImportance to get more or less info)", "", "EmbedTask", Microsoft.Build.Framework.MessageImportance.High));
 
             var stopwatch = Stopwatch.StartNew();
 
@@ -55,7 +55,7 @@ namespace Costura
             {
                 stopwatch.Stop();
                 logger.Flush();
-                BuildEngine.LogMessageEvent(new BuildMessageEventArgs(string.Format("\tFinished ({0}ms)", stopwatch.ElapsedMilliseconds), "", "EmbedTask", Microsoft.Build.Framework.MessageImportance.High));
+                BuildEngine.LogMessageEvent(new BuildMessageEventArgs(string.Format("\tFinished ({0}ms)", stopwatch.ElapsedMilliseconds), "", "Costura.EmbedTask", Microsoft.Build.Framework.MessageImportance.High));
             }
             return !logger.ErrorHasBeenRaised;
         }
@@ -116,7 +116,7 @@ namespace Costura
         {
             if (!Overwrite && DeleteReferences)
             {
-                throw new WeavingException("Overwrite=false and DeleteReferences=true which is an invalid config.");
+                throw new WeavingException("Overwrite=false and DeleteReferences=true is invalid because if the new file is copied to a different directory it serves no purpose deleting references.");
             }
         }
 
@@ -127,7 +127,10 @@ namespace Costura
             //Try to delete directory for cleanup purposes. 
             try
             {
-                Directory.Delete(directoryPath, true);
+                if (Directory.Exists(directoryPath))
+                {
+                    Directory.Delete(directoryPath, true);
+                }
             }
             catch (Exception)
             {
