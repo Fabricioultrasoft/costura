@@ -24,6 +24,7 @@
 					$(SolutionDir)\**\bin\**;
 					$(SolutionDir)\**\obj\**;
 					$(SolutionDir)\**\.svn\**;
+					$(SolutionDir)\**\NuGetBuild\**;
 					$(SolutionDir)\**\*.user;
 					$(SolutionDir)\**\*.metaproj.*;
 					$(SolutionDir)\**\*.teamcity.*;

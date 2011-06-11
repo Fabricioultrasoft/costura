@@ -180,10 +180,10 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Resources\Package.ico" >
+    <Content Include="Resources\Package.ico">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
-    <Content Include="Resources\PreviewImage.png" >
+    <Content Include="Resources\PreviewImage.png">
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
   </ItemGroup>
@@ -199,6 +199,7 @@
   <ItemGroup>
     <ProjectReference Include="$(SolutionDir)Costura\Costura.csproj">
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>False</Private>
     </ProjectReference>
     <EmbeddedResource Include="$(SolutionDir)Costura\bin\$(ConfigurationName)\Merged\Costura.dll">
       <Link>Resources\Costura.dll</Link>
