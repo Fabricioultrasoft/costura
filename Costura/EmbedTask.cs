@@ -14,6 +14,7 @@ namespace Costura
     public class EmbedTask : Task, IConfig
     {
         public bool Overwrite { set; get; }
+        public bool IncludeDebugSymbols { set; get; }
         public bool DeleteReferences { set; get; }
         public string TargetPath { set; get; }
         public string MessageImportance { set; get; }
@@ -29,6 +30,7 @@ namespace Costura
             MessageImportance = "Low";
             Overwrite = true;
             DeleteReferences = true;
+            IncludeDebugSymbols = true;
         }
 
         public override bool Execute()

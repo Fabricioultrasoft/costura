@@ -18,6 +18,7 @@ namespace CosturaVSPackageTests
                 new ProjectRemover(targetFileInfo.FullName);
                 var reader = new ProjectReader(targetFileInfo.FullName);
                 Assert.IsNull(reader.Overwrite);
+                Assert.IsNull(reader.IncludeDebugSymbols);
                 Assert.IsNull(reader.DeleteReferences);
                 Assert.IsNull(reader.TargetPath);
                 Assert.IsNull(reader.ToolsDirectory);
@@ -42,6 +43,7 @@ namespace CosturaVSPackageTests
                 var reader = new ProjectReader(targetFileInfo.FullName);
 
                 Assert.IsNull(reader.Overwrite);
+                Assert.IsNull(reader.IncludeDebugSymbols);
                 Assert.IsNull(reader.DeleteReferences);
                 Assert.IsNull(reader.TargetPath);
                 Assert.IsNull(reader.ToolsDirectory);

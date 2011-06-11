@@ -53,7 +53,8 @@
         Name="AfterBuild">
       <Costura.EmbedTask 
             TargetPath="@(TargetPath)"
-            Overwrite="true" 
+            Overwrite="true"
+            IncludeDebugSymbols="true" 
             DeleteReferences="true" 
             MessageImportance="High"/>
   </Target>

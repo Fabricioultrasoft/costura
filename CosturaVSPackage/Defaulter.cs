@@ -9,6 +9,7 @@ namespace CosturaVSPackage
             configureWindowModel.MessageImportance = projectReader.MessageImportance.GetValueOrDefault(MessageImportance.Low);
             configureWindowModel.TargetPath = projectReader.TargetPath;
             configureWindowModel.Overwrite = projectReader.Overwrite.GetValueOrDefault(true);
+            configureWindowModel.IncludeDebugSymbols = projectReader.IncludeDebugSymbols.GetValueOrDefault(true);
             configureWindowModel.DeleteReferences = projectReader.DeleteReferences.GetValueOrDefault(true);
             configureWindowModel.DeriveTargetPathFromBuildEngine = projectReader.TargetPath == null;
             configureWindowModel.ToolsDirectory = GetValueOrDefault(projectReader.ToolsDirectory, @"$(SolutionDir)Tools\");
@@ -35,6 +36,11 @@ namespace CosturaVSPackage
             if (!configureWindowModel.Overwrite)
             {
                 projectInjector.Overwrite = false;
+            }
+
+            if (!configureWindowModel.IncludeDebugSymbols)
+            {
+                projectInjector.IncludeDebugSymbols = false;
             }
 
             if (!configureWindowModel.DeleteReferences)

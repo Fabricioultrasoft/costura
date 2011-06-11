@@ -13,6 +13,8 @@ namespace CosturaVSPackage
         public string ToolsDirectory { set; get; }
         public MessageImportance? MessageImportance { set; get; }
         public bool? Overwrite { set; get; }
+        public bool? IncludeDebugSymbols { set; get; }
+        
         public string ProjectFile { set; get; }
         public bool? DeleteReferences { get; set; }
 
@@ -44,6 +46,12 @@ namespace CosturaVSPackage
             {
                 xAttributes.Add(new XAttribute("Overwrite", Overwrite));
             }
+
+            if (IncludeDebugSymbols != null)
+            {
+                xAttributes.Add(new XAttribute("IncludeDebugSymbols", IncludeDebugSymbols));
+            }
+            
             if (DeleteReferences != null)
             {
                 xAttributes.Add(new XAttribute("DeleteReferences", DeleteReferences));

@@ -30,6 +30,17 @@ namespace CosturaVSPackage
             }
         }
 
+        bool includeDebugSymbols;
+        public bool IncludeDebugSymbols
+        {
+            get { return includeDebugSymbols; }
+            set
+            {
+                includeDebugSymbols = value;
+                OnPropertyChanged("IncludeDebugSymbols");
+            }
+        }
+        
         bool deleteReferences;
         public bool DeleteReferences
         {

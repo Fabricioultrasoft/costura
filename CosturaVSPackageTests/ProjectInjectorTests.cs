@@ -22,6 +22,7 @@ namespace CosturaVSPackageTests
                     ProjectFile = targetFileInfo.FullName,
                     TargetPath = "Foo.dll",
                     Overwrite = false,
+                    IncludeDebugSymbols = false,
                     DeleteReferences = false,
                     MessageImportance = MessageImportance.High,
                 };
@@ -30,6 +31,7 @@ namespace CosturaVSPackageTests
                 var reader = new ProjectReader(targetFileInfo.FullName);
 
                 Assert.IsFalse(reader.Overwrite.Value);
+                Assert.IsFalse(reader.IncludeDebugSymbols.Value);
                 Assert.IsFalse(reader.DeleteReferences.Value);
                 Assert.AreEqual("Foo.dll", reader.TargetPath);
                 Assert.AreEqual(@"Tools\", reader.ToolsDirectory);
@@ -55,6 +57,7 @@ namespace CosturaVSPackageTests
                     ProjectFile = targetFileInfo.FullName,
                     TargetPath = "Foo2.dll",
                     Overwrite = false,
+                    IncludeDebugSymbols = false,
                     DeleteReferences = false,
                     MessageImportance = MessageImportance.High,
                 };
@@ -62,6 +65,7 @@ namespace CosturaVSPackageTests
 
                 var reader = new ProjectReader(targetFileInfo.FullName);
 
+                Assert.IsFalse(reader.IncludeDebugSymbols.Value);
                 Assert.IsFalse(reader.Overwrite.Value);
                 Assert.IsFalse(reader.DeleteReferences.Value);
                 Assert.AreEqual("Foo2.dll", reader.TargetPath);

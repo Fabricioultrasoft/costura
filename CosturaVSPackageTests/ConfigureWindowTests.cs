@@ -32,6 +32,7 @@ namespace CosturaVSPackageTests
                                         (new ConfigureWindowModel
                                              {
                                                  Overwrite = false,
+                                                 IncludeDebugSymbols = false,
                                                  MessageImportance = MessageImportance.High,
                                              }
                                         );
