@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.Composition;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.IO;
 using Mono.Cecil;
 using WeavingCommon;
@@ -6,15 +8,17 @@ using WeavingCommon;
 namespace Costura
 {
     [Export, PartCreationPolicy(CreationPolicy.Shared)]
-	public class ResourceEmbedder
+	public class ResourceEmbedder: IDisposable
 	{
         DependencyFinder dependencyFinder;
         ModuleReader moduleReader;
         EmbedTask embedTask;
+        List<Stream> streams;
 
-        [ImportingConstructor]
+            [ImportingConstructor]
         public ResourceEmbedder(DependencyFinder dependencyFinder, ModuleReader moduleReader, EmbedTask embedTask)
         {
+                streams = new List<Stream>();
             this.dependencyFinder = dependencyFinder;
             this.moduleReader = moduleReader;
             this.embedTask = embedTask;
@@ -40,9 +44,18 @@ namespace Costura
 
         private void Embedd(string fullPath)
         {
-            var resource = new EmbeddedResource("Costura." + Path.GetFileName(fullPath), ManifestResourceAttributes.Private, File.ReadAllBytes(fullPath));
+            var fileStream = File.OpenRead(fullPath);
+            streams.Add(fileStream);
+            var resource = new EmbeddedResource("Costura." + Path.GetFileName(fullPath), ManifestResourceAttributes.Private, fileStream);
             moduleReader.Module.Resources.Add(resource);
         }
 
+        public void Dispose()
+        {
+            foreach (var stream in streams)
+            {
+                stream.Dispose();
+            }
+        }
 	}
 }

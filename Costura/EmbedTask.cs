@@ -104,13 +104,14 @@ namespace Costura
                 container.GetExportedValue<AssemblyLoaderImporter>().Execute();
                 container.GetExportedValue<ModuleLoaderImporter>().Execute();
                 container.GetExportedValue<DependencyFinder>().Execute();
-                container.GetExportedValue<ResourceEmbedder>().Execute();
-                
                 container.GetExportedValue<ProjectKeyReader>().Execute();
-                var savePath = GetSavePath();
-                container.GetExportedValue<ModuleWriter>().Execute(savePath);
+                using (var resourceEmbedder = container.GetExportedValue<ResourceEmbedder>())
+                {
+                    resourceEmbedder.Execute();
+                    var savePath = GetSavePath();
+                    container.GetExportedValue<ModuleWriter>().Execute(savePath);
+                }
                 container.GetExportedValue<ReferenceDeleter>().Execute();
-                
             }
         }
 
