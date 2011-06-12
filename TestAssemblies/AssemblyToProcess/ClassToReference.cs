@@ -1,4 +1,4 @@
-﻿namespace AssemblyToReferenceDotNet4
+﻿namespace AssemblyToReference
 {
    public static class ClassToReference
     {

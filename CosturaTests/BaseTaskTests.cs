@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
+using Mono.Cecil;
 using NUnit.Framework;
 
 namespace CosturaTests
@@ -40,5 +42,11 @@ namespace CosturaTests
         }
 #endif
 
+        [Test]
+        public void EnsureOnly1RefToMscorLib()
+        {
+            var moduleDefinition = ModuleDefinition.ReadModule(assembly.CodeBase.Remove(0, 8));
+            Assert.AreEqual(1, moduleDefinition.AssemblyReferences.Count(x=>x.Name == "mscorlib"));
+        }
     }
 }

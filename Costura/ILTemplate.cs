@@ -20,10 +20,10 @@ static class ILTemplate
 
         using (var assemblyStream = executingAssembly.GetManifestResourceStream(assemblyResourceName))
         {
-            //if (assemblyStream == null)
-            //{
-            //    throw new Exception(string.Format("Could not retrieve {0}", assemblyResourceName));
-            //}
+            if (assemblyStream == null)
+            {
+                return null;
+            }
             var assemblyData = new Byte[assemblyStream.Length];
             assemblyStream.Read(assemblyData, 0, assemblyData.Length);
 

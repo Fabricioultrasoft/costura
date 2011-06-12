@@ -28,10 +28,7 @@ namespace Costura
 												| MethodAttributes.RTSpecialName;
 			var cctor = GetCctor(attributes);
 			var il = cctor.Body.GetILProcessor();
-
-			//var typeDefinition = moduleReader.Module.Types.First(x => x.Name == "ILTemplate");
-			//il.Append(il.Create(OpCodes.Call, typeDefinition.Methods.First(x => x.Name == "Attach")));
-			il.Append(il.Create(OpCodes.Call, assemblyLoaderImporter.AttachMethod));
+            il.Append(il.Create(OpCodes.Call, assemblyLoaderImporter.AttachMethod));
 			il.Append(il.Create(OpCodes.Ret));
 		}
 

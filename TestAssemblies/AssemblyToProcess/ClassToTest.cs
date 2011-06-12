@@ -1,6 +1,6 @@
-﻿using AssemblyToReferenceDotNet4;
+﻿using AssemblyToReference;
 
-namespace AssemblyToProcessDotNet4
+namespace AssemblyToProcess
 {
     public class ClassToTest
     {
