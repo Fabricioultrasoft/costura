@@ -58,7 +58,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DependencyFinder.cs" />
-    <Compile Include="ILTemplate.cs" />
     <Compile Include="ModuleLoaderImporter.cs" />
     <Compile Include="EmbedTask.cs" />
     <Compile Include="AssemblyLoaderImporter.cs" />
@@ -71,6 +70,26 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DotNetTemplate\DotNetTemplate.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>False</Private>
+      <Project>{EBDB683B-B29E-4396-9FB2-9B190253B9E5}</Project>
+      <Name>DotNetTemplate</Name>
+    </ProjectReference>
+    <EmbeddedResource Include="$(SolutionDir)DotNetTemplate\bin\$(ConfigurationName)\DotNetTemplate.dll">
+      <InProject>false</InProject>
+    </EmbeddedResource>
+    <ProjectReference Include="..\SilverlightTemplate\SilverlightTemplate.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>False</Private>
+      <Project>{E1F8AC89-01A5-478B-80C4-F96F6DD6875C}</Project>
+      <Name>SilverlightTemplate</Name>
+    </ProjectReference>
+    <EmbeddedResource Include="$(SolutionDir)SilverlightTemplate\bin\$(ConfigurationName)\SilverlightTemplate.dll">
+      <InProject>false</InProject>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="VirtuosityMsBuildTask.WeavingTask" AssemblyFile="$(SolutionDir)Tools\VirtuosityMsBuildTask.dll" />

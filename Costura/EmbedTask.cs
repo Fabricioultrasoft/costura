@@ -91,7 +91,8 @@ namespace Costura
 
 
                 container.GetExportedValue<AssemblyResolver>().Execute();
-                container.GetExportedValue<ModuleReader>().Execute();
+                var moduleReader = container.GetExportedValue<ModuleReader>();
+                moduleReader.Execute();
 
                 var fileChangedChecker = container.GetExportedValue<FileChangedChecker>();
                 if (!fileChangedChecker.ShouldStart())

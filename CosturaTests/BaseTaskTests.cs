@@ -30,7 +30,7 @@ namespace CosturaTests
         [Test]
         public void Simple()
         {
-            var instance = assembly.GetInstance("AssemblyToProcessDotNet4.ClassToTest");
+            var instance = assembly.GetInstance("AssemblyToProcess.ClassToTest");
             Assert.AreEqual("Hello", instance.Foo());
         }
 
