@@ -38,18 +38,13 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassToTest.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="AssemblyToReferenceSilverlight4.csproj">
-      <Project>{EED72AC7-7404-49B7-8425-ADF10DCDE8E5}</Project>
-      <Name>AssemblyToReferenceSilverlight4</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

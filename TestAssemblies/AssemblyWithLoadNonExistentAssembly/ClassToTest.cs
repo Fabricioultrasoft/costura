@@ -1,12 +1,9 @@
 ﻿using System.Reflection;
 
-namespace AssemblyWithLoadNonExistentAssembly
+public class ClassToTest
 {
-    public class ClassToTest
-    {
-        public void MethodThatDoesLoading()
-        {
-            Assembly.Load("BadAssemblyName");
-        }
-    }
+	public void MethodThatDoesLoading()
+	{
+		Assembly.Load("BadAssemblyName");
+	}
 }

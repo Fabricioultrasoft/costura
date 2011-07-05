@@ -3,47 +3,45 @@ using System.Reflection;
 using System.Security.Permissions;
 using System.Threading;
 
-namespace CosturaVSPackageTests
+
+public class CrossThreadRunner
 {
-    public class CrossThreadRunner
-    {
-        Exception lastException;
+	Exception lastException;
 
-        public void RunInSta(Action userDelegate)
-        {
-            lastException = null;
+	public void RunInSta(Action userDelegate)
+	{
+		lastException = null;
 
-            var thread = new Thread(() => MultiThreadedWorker(() => userDelegate()));
-            thread.SetApartmentState(ApartmentState.STA);
+		var thread = new Thread(() => MultiThreadedWorker(() => userDelegate()));
+		thread.SetApartmentState(ApartmentState.STA);
 
-            thread.Start();
-            thread.Join();
+		thread.Start();
+		thread.Join();
 
-            if (lastException != null)
-            {
-                ThrowExceptionPreservingStack(lastException);
-            }
-        }
+		if (lastException != null)
+		{
+			ThrowExceptionPreservingStack(lastException);
+		}
+	}
 
 
-        void MultiThreadedWorker(ThreadStart userDelegate)
-        {
-            try
-            {
-                userDelegate.Invoke();
-            }
-            catch (Exception e)
-            {
-                lastException = e;
-            }
-        }
+	void MultiThreadedWorker(ThreadStart userDelegate)
+	{
+		try
+		{
+			userDelegate.Invoke();
+		}
+		catch (Exception e)
+		{
+			lastException = e;
+		}
+	}
 
-        [ReflectionPermission(SecurityAction.Demand)]
-        static void ThrowExceptionPreservingStack(Exception exception)
-        {
-            var remoteStackTraceString = typeof(Exception).GetField("_remoteStackTraceString", BindingFlags.Instance | BindingFlags.NonPublic);
-            remoteStackTraceString.SetValue(exception, exception.StackTrace + Environment.NewLine);
-            throw exception;
-        }
-    }
+	[ReflectionPermission(SecurityAction.Demand)]
+	static void ThrowExceptionPreservingStack(Exception exception)
+	{
+		var remoteStackTraceString = typeof (Exception).GetField("_remoteStackTraceString", BindingFlags.Instance | BindingFlags.NonPublic);
+		remoteStackTraceString.SetValue(exception, exception.StackTrace + Environment.NewLine);
+		throw exception;
+	}
 }

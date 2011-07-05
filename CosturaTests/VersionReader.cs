@@ -4,50 +4,48 @@ using System.Linq;
 using System.Xml.Linq;
 using WeavingCommon;
 
-namespace CosturaTests
+
+public class VersionReader
 {
-    public class VersionReader
-    {
-        public Single FrameworkVersionAsNumber { get; set; }
-        public string FrameworkVersionAsString { get; set; }
-        public string TargetFrameworkProfile { get; set; }
-        public bool IsSilverlight { get; set; }
+	public Single FrameworkVersionAsNumber { get; set; }
+	public string FrameworkVersionAsString { get; set; }
+	public string TargetFrameworkProfile { get; set; }
+	public bool IsSilverlight { get; set; }
 
-        public VersionReader(string projectPath)
-        {
-            var xDocument = XDocument.Load(projectPath);
-            GetTargetFrameworkIdentifier(xDocument);
-            GetFrameworkVersion(xDocument);
-            GetTargetFrameworkProfile(xDocument);
-        }
+	public VersionReader(string projectPath)
+	{
+		var xDocument = XDocument.Load(projectPath);
+		GetTargetFrameworkIdentifier(xDocument);
+		GetFrameworkVersion(xDocument);
+		GetTargetFrameworkProfile(xDocument);
+	}
 
-        void GetFrameworkVersion(XDocument xDocument)
-        {
-            FrameworkVersionAsString = xDocument.BuildDescendants("TargetFrameworkVersion")
-                .Select(c => c.Value)
-                .First();
-            FrameworkVersionAsNumber = Single.Parse(FrameworkVersionAsString.Remove(0, 1), CultureInfo.InvariantCulture);
-        }
+	void GetFrameworkVersion(XDocument xDocument)
+	{
+		FrameworkVersionAsString = xDocument.BuildDescendants("TargetFrameworkVersion")
+			.Select(c => c.Value)
+			.First();
+		FrameworkVersionAsNumber = Single.Parse(FrameworkVersionAsString.Remove(0, 1), CultureInfo.InvariantCulture);
+	}
 
 
-        void GetTargetFrameworkProfile(XDocument xDocument)
-        {
-            TargetFrameworkProfile = xDocument.BuildDescendants("TargetFrameworkProfile")
-                .Select(c => c.Value)
-                .FirstOrDefault();
-        }
+	void GetTargetFrameworkProfile(XDocument xDocument)
+	{
+		TargetFrameworkProfile = xDocument.BuildDescendants("TargetFrameworkProfile")
+			.Select(c => c.Value)
+			.FirstOrDefault();
+	}
 
-        void GetTargetFrameworkIdentifier(XDocument xDocument)
-        {
-            var targetFrameworkIdentifier = xDocument.BuildDescendants("TargetFrameworkIdentifier")
-                .Select(c => c.Value)
-                .FirstOrDefault();
-            if (string.Equals(targetFrameworkIdentifier, "Silverlight", StringComparison.InvariantCultureIgnoreCase))
-            {
-                IsSilverlight = true;
-            }
+	void GetTargetFrameworkIdentifier(XDocument xDocument)
+	{
+		var targetFrameworkIdentifier = xDocument.BuildDescendants("TargetFrameworkIdentifier")
+			.Select(c => c.Value)
+			.FirstOrDefault();
+		if (string.Equals(targetFrameworkIdentifier, "Silverlight", StringComparison.InvariantCultureIgnoreCase))
+		{
+			IsSilverlight = true;
+		}
 
-        }
+	}
 
-    }
 }

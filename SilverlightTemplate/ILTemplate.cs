@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Windows;
 
 namespace Costura
@@ -14,17 +15,24 @@ namespace Costura
             }
         }
 
-        private static void ResolveAssembly(Assembly executingAssembly, string resourceName)
-        {
-            if (!resourceName.StartsWith("Costura."))
-            {
-                return;
-            }
-            using (var assemblyStream = executingAssembly.GetManifestResourceStream(resourceName))
-            {
-                var ap = new AssemblyPart();
-                ap.Load(assemblyStream);
-            }
-        }
+		private static void ResolveAssembly(Assembly executingAssembly, string resourceName)
+		{
+			if (!resourceName.StartsWith("Costura."))
+			{
+				return;
+			}
+			using (var assemblyStream = executingAssembly.GetManifestResourceStream(resourceName))
+			{
+				var ap = new AssemblyPart();
+				try
+				{
+					ap.Load(assemblyStream);
+				}
+				catch (Exception exception)
+				{
+					throw new Exception(string.Format("Could not load '{0}'", resourceName), exception);
+				}
+			}
+		}
     }
 }

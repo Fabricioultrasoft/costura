@@ -1,10 +1,7 @@
-﻿namespace AssemblyToReference
+﻿public static class ClassToReference
 {
-   public static class ClassToReference
-    {
-       public static string Foo()
-       {
-           return "Hello";
-       }
-    }
+	public static string Foo()
+	{
+		return "Hello";
+	}
 }

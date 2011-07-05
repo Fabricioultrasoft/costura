@@ -1,15 +1,13 @@
 ﻿using NUnit.Framework;
 
-namespace CosturaTests
+
+[TestFixture]
+public class Net4WeavingTaskTests : BaseTaskTests
 {
-    [TestFixture]
-    public class Net4WeavingTaskTests : BaseTaskTests
-    {
 
-        public Net4WeavingTaskTests()
-            : base(@"AssemblyToProcess\AssemblyToProcessDotNet4.csproj")
-        {
-        }
+	public Net4WeavingTaskTests()
+		: base(@"AssemblyToProcess\AssemblyToProcessDotNet4.csproj")
+	{
+	}
 
-    }
 }
