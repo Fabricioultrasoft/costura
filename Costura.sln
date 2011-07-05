@@ -28,9 +28,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyToProcessDotNet35",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AssemblyWithLoadNonExistentAssembly", "TestAssemblies\AssemblyWithLoadNonExistentAssembly\AssemblyWithLoadNonExistentAssembly.csproj", "{82934E4C-22E9-497B-85E0-3083BA41AAB8}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Templates", "Templates", "{6D332C07-B010-4B54-8AF3-261A0C660401}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetTemplate", "DotNetTemplate\DotNetTemplate.csproj", "{EBDB683B-B29E-4396-9FB2-9B190253B9E5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Template", "Template\Template.csproj", "{70D47298-2D11-4FA0-9BA7-ECD87C683CBC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,12 +105,12 @@ Global
 		{82934E4C-22E9-497B-85E0-3083BA41AAB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{82934E4C-22E9-497B-85E0-3083BA41AAB8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{82934E4C-22E9-497B-85E0-3083BA41AAB8}.Release|x86.ActiveCfg = Release|Any CPU
-		{EBDB683B-B29E-4396-9FB2-9B190253B9E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EBDB683B-B29E-4396-9FB2-9B190253B9E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EBDB683B-B29E-4396-9FB2-9B190253B9E5}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{EBDB683B-B29E-4396-9FB2-9B190253B9E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EBDB683B-B29E-4396-9FB2-9B190253B9E5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EBDB683B-B29E-4396-9FB2-9B190253B9E5}.Release|x86.ActiveCfg = Release|Any CPU
+		{70D47298-2D11-4FA0-9BA7-ECD87C683CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70D47298-2D11-4FA0-9BA7-ECD87C683CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70D47298-2D11-4FA0-9BA7-ECD87C683CBC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{70D47298-2D11-4FA0-9BA7-ECD87C683CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70D47298-2D11-4FA0-9BA7-ECD87C683CBC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70D47298-2D11-4FA0-9BA7-ECD87C683CBC}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -123,6 +121,5 @@ Global
 		{67091480-17B3-4284-80A1-158587E08DF9} = {662BB847-AC16-4C02-AA1B-14E716B7E4EB}
 		{A9631B7B-1EB6-4FB6-B065-F902A20E3629} = {662BB847-AC16-4C02-AA1B-14E716B7E4EB}
 		{82934E4C-22E9-497B-85E0-3083BA41AAB8} = {662BB847-AC16-4C02-AA1B-14E716B7E4EB}
-		{EBDB683B-B29E-4396-9FB2-9B190253B9E5} = {6D332C07-B010-4B54-8AF3-261A0C660401}
 	EndGlobalSection
 EndGlobal

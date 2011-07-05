@@ -53,7 +53,7 @@ namespace Costura
 			                       		AssemblyResolver = assemblyResolver,
 			                       	};
 
-			using (var resourceStream = typeof(AssemblyLoaderImporter).Assembly.GetManifestResourceStream("Costura.DotNetTemplate.dll"))
+			using (var resourceStream = typeof(AssemblyLoaderImporter).Assembly.GetManifestResourceStream("Costura.Template.dll"))
 			{
 				return ModuleDefinition.ReadModule(resourceStream, readerParameters);
 			}

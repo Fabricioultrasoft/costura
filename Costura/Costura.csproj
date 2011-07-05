@@ -57,6 +57,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Template\Template.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <Private>False</Private>
+      <Project>{70D47298-2D11-4FA0-9BA7-ECD87C683CBC}</Project>
+      <Name>Template</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="DependencyFinder.cs" />
     <Compile Include="ModuleLoaderImporter.cs" />
     <Compile Include="EmbedTask.cs" />
@@ -72,16 +80,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DotNetTemplate\DotNetTemplate.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Private>False</Private>
-      <Project>{EBDB683B-B29E-4396-9FB2-9B190253B9E5}</Project>
-      <Name>DotNetTemplate</Name>
-    </ProjectReference>
-    <EmbeddedResource Include="$(SolutionDir)DotNetTemplate\bin\$(ConfigurationName)\DotNetTemplate.dll">
-      <InProject>false</InProject>
-    </EmbeddedResource>
-    <EmbeddedResource Include="$(SolutionDir)SilverlightTemplate\bin\$(ConfigurationName)\SilverlightTemplate.dll">
+    <EmbeddedResource Include="$(SolutionDir)Template\bin\$(ConfigurationName)\Template.dll">
       <InProject>false</InProject>
     </EmbeddedResource>
   </ItemGroup>
