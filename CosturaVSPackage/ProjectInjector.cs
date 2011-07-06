@@ -9,15 +9,13 @@ namespace CosturaVSPackage
 {
     public class ProjectInjector
     {
-        public string TargetPath { set; get; }
-        public string ToolsDirectory { set; get; }
-        public MessageImportance? MessageImportance { set; get; }
-        public bool? Overwrite { set; get; }
-        public bool? IncludeDebugSymbols { set; get; }
-        
-        public string ProjectFile { set; get; }
-        public bool? DeleteReferences { get; set; }
-
+        public string TargetPath;
+        public string ToolsDirectory;
+        public MessageImportance? MessageImportance;
+        public bool? Overwrite;
+        public bool? IncludeDebugSymbols;
+        public string ProjectFile;
+        public bool? DeleteReferences;
         XDocument xDocument;
 
         public void Execute()

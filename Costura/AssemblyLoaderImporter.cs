@@ -15,7 +15,7 @@ namespace Costura
 		ConstructorInfo instructionConstructorInfo;
 		TypeDefinition targetType;
 		TypeDefinition sourceType;
-		public MethodDefinition AttachMethod { get; set; }
+	    public MethodDefinition AttachMethod;
 
 		[ImportingConstructor]
 		public AssemblyLoaderImporter(ModuleReader moduleReader, AssemblyResolver assemblyResolver)

@@ -9,13 +9,12 @@ namespace CosturaVSPackage
     public class ProjectReader
     {
         string projectFile;
-        public string ToolsDirectory { set; get; }
-        public string TargetPath { set; get; }
-        public MessageImportance? MessageImportance { get; set; }
-        public bool? Overwrite { get; set; }
-        public bool? IncludeDebugSymbols { get; set; }
-        
-        public bool? DeleteReferences { get; set; }
+        public string ToolsDirectory;
+        public string TargetPath;
+        public MessageImportance? MessageImportance;
+        public bool? Overwrite;
+        public bool? IncludeDebugSymbols;
+        public bool? DeleteReferences;
 
         public ProjectReader(string projectFile)
         {

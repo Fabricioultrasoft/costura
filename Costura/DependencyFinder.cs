@@ -11,7 +11,7 @@ namespace Costura
 	{
         EmbedTask embedTask;
         IBuildEngine buildEngine;
-        public List<string> Dependencies { get; set; }
+        public List<string> Dependencies;
 
         [ImportingConstructor]
 		public DependencyFinder(EmbedTask embedTask, IBuildEngine  buildEngine)
