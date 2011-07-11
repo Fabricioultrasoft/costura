@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Reflection;
 using Mono.Cecil;
 using NUnit.Framework;
@@ -30,6 +32,20 @@ public abstract class BaseTaskTests
 	{
 		var instance = assembly.GetInstance("ClassToTest");
 		Assert.AreEqual("Hello", instance.Foo());
+	}
+	[Test]
+	public void ThrowException()
+	{
+		try
+		{
+			var instance = assembly.GetInstance("ClassToTest");
+			instance.ThrowException();
+		}
+		catch (Exception exception)
+		{
+			Debug.WriteLine(exception.StackTrace);
+			Assert.IsTrue(exception.StackTrace.Contains("ClassToReference.cs:line"));	
+		}
 	}
 
 #if(DEBUG)

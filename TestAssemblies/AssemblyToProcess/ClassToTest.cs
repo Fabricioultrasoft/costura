@@ -5,4 +5,9 @@ public class ClassToTest
 	{
 		return ClassToReference.Foo();
 	}
+	public void ThrowException()
+	{
+		ClassToReference.ThrowException();
+	}
 }
+
