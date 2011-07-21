@@ -51,8 +51,7 @@
     </GetAssemblyIdentity>
     <FileUpdate Files="$(SolutionDir)NuGetBuild\Costura.nuspec" Regex="version&gt;([^&lt;]*)&lt;/version" ReplacementText="version&gt;%(TaskAssembly.Version)&lt;/version" />
     <FileUpdate Files="$(SolutionDir)NuGetBuild\Tools\install.ps1" Regex="9.9" ReplacementText="%(TaskAssembly.Version)" />
-	  <Exec command="&quot;$(SolutionDir)Tools\nuget.exe&quot; pack &quot;$(SolutionDir)NuGetBuild\Costura.nuspec&quot; -OutputDirectory &quot;$(SolutionDir)NuGetBuild&quot;" />
-   
+    <Exec command="&quot;$(SolutionDir)Tools\nuget.exe&quot; pack &quot;$(SolutionDir)NuGetBuild\Costura.nuspec&quot; -OutputDirectory &quot;$(SolutionDir)NuGetBuild&quot;" />
   </Target>
   <ItemGroup>
     <ProjectReference Include="..\Costura\Costura.csproj">

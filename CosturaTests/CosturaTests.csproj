@@ -58,6 +58,10 @@
     <Reference Include="WeavingCommon">
       <HintPath>..\Lib\WeavingCommon.dll</HintPath>
     </Reference>
+    <ProjectReference Include="..\Costura\Costura.csproj">
+      <Project>{F4870A6E-7408-4CED-9F4A-E06DB0C95833}</Project>
+      <Name>Costura</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyExtensions.cs" />
@@ -70,17 +74,7 @@
     <Compile Include="Verifier.cs" />
     <Compile Include="VersionReader.cs" />
     <Compile Include="WeaverHelper.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Costura\Costura.csproj">
-      <Project>{F4870A6E-7408-4CED-9F4A-E06DB0C95833}</Project>
-      <Name>Costura</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
+    <None Include="packages.config"/>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
