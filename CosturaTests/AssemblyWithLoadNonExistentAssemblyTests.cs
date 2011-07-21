@@ -9,7 +9,7 @@ public class AssemblyWithLoadNonExistentAssemblyTests
 	[Test]
 	public void EnsureNoException()
 	{
-		var projectPath = @"AssemblyWithLoadNonExistentAssembly\AssemblyWithLoadNonExistentAssembly.csproj";
+        var projectPath = @"EmbedTestAssemblies\AssemblyWithLoadNonExistentAssembly\AssemblyWithLoadNonExistentAssembly.csproj";
 #if (!DEBUG)
             projectPath = projectPath.Replace("Debug", "Release");
 #endif

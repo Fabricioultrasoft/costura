@@ -67,14 +67,14 @@
     <Compile Include="AssemblyExtensions.cs" />
     <Compile Include="AssemblyWithLoadNonExistentAssemblyTests.cs" />
     <Compile Include="BaseTaskTests.cs" />
-    <Compile Include="Net35WeavingTaskTests.cs" />
-    <Compile Include="Net4WeavingTaskTests.cs" />
+    <Compile Include="EmbedNet35WeavingTaskTests.cs" />
+    <Compile Include="EmbedNet4WeavingTaskTests.cs" />
     <Compile Include="ReferenceFinder.cs" />
     <Compile Include="StubBuildEngine.cs" />
     <Compile Include="Verifier.cs" />
     <Compile Include="VersionReader.cs" />
     <Compile Include="WeaverHelper.cs" />
-    <None Include="packages.config"/>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
