@@ -85,10 +85,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <UsingTask TaskName="VirtuosityMsBuildTask.WeavingTask" AssemblyFile="$(SolutionDir)Tools\VirtuosityMsBuildTask.dll" />
-  <Target Name="AfterCompile">
-    <VirtuosityMsBuildTask.WeavingTask />
-  </Target>
   <Target Name="AfterBuild">
     <RemoveDir Directories="$(TargetDir)Merged" />
     <MakeDir Directories="$(TargetDir)Merged" />
