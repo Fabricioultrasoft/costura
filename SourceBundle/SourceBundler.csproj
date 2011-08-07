@@ -32,7 +32,9 @@
 					" />
 	</ItemGroup>
     <Copy SourceFiles="@(SourceFiles)" 
-        DestinationFolder="$(SolutionDir)SourceBundleBuild\%(RecursiveDir)"></Copy>
+        DestinationFolder="$(SolutionDir)SourceBundleBuild\%(RecursiveDir)"/>
     
+    <Copy SourceFiles="$(SolutionDir)Packages\repositories.config" 
+        DestinationFolder="$(SolutionDir)SourceBundleBuild\Packages\"/>
   </Target>
 </Project>
