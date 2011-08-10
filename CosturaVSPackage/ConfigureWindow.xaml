@@ -80,7 +80,7 @@
                     <CheckBox Grid.Row="1" Grid.Column="1" IsChecked="{Binding Path=Overwrite}"/>
                     <TextBlock Grid.Row="2">Delete References:</TextBlock>
                     <CheckBox Grid.Row="2" Grid.Column="1" IsChecked="{Binding Path=DeleteReferences}"/>
-                    <TextBlock Grid.Row="3">Include Debug Symbols:</TextBlock>
+                    <TextBlock Grid.Row="3">Include Reference<LineBreak/>Debug Symbols:</TextBlock>
                     <CheckBox Grid.Row="3" Grid.Column="1" IsChecked="{Binding Path=IncludeDebugSymbols}"/>
                 </Grid>
             </TabItem>
