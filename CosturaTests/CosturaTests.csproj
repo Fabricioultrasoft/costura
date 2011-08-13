@@ -43,7 +43,7 @@
       <HintPath>..\Lib\Cecil\Mono.Cecil.Pdb.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework">
-      <HintPath>..\Lib\nunit.framework.dll</HintPath>
+      <HintPath>..\packages\NUnitLib.2.5.10.11092\lib\net\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
