@@ -3,33 +3,30 @@ using System.IO;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace CosturaVSPackage
+public class ProjectRemover
 {
-    public class ProjectRemover
+    private XDocument xDocument;
+
+    public ProjectRemover(string projectFile)
     {
-        XDocument xDocument;
-
-        public ProjectRemover(string projectFile)
-        {
-            new FileInfo(projectFile).IsReadOnly = false;
-            xDocument = XDocument.Load(projectFile);
-            RemoveUsingTask();
-            RemoveEmbedTask();
-            xDocument.Save(projectFile);
-        }
-
-        void RemoveEmbedTask()
-        {
-            xDocument.BuildDescendants("Target")
-                .Where(x => string.Equals((string)x.Attribute("Name"), "AfterBuild", StringComparison.InvariantCultureIgnoreCase))
-                .Descendants(XDocumentExtensions.BuildNamespace + "Costura.EmbedTask").Remove();
-        }
-
-        void RemoveUsingTask()
-        {
-            xDocument.BuildDescendants("UsingTask")
-                .Where(x => (string)x.Attribute("TaskName") == "Costura.EmbedTask").Remove();
-        }
-
+        new FileInfo(projectFile).IsReadOnly = false;
+        xDocument = XDocument.Load(projectFile);
+        RemoveUsingTask();
+        RemoveEmbedTask();
+        xDocument.Save(projectFile);
     }
+
+    private void RemoveEmbedTask()
+    {
+        xDocument.BuildDescendants("Target")
+            .Where(x => string.Equals((string) x.Attribute("Name"), "AfterBuild", StringComparison.InvariantCultureIgnoreCase))
+            .Descendants(XDocumentExtensions.BuildNamespace + "Costura.EmbedTask").Remove();
+    }
+
+    private void RemoveUsingTask()
+    {
+        xDocument.BuildDescendants("UsingTask")
+            .Where(x => (string) x.Attribute("TaskName") == "Costura.EmbedTask").Remove();
+    }
+
 }

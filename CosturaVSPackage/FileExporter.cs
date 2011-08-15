@@ -2,33 +2,30 @@
 using System.IO;
 using VsPackageCommon;
 
-namespace CosturaVSPackage
+[Export, PartCreationPolicy(CreationPolicy.Shared)]
+public class FileExporter
 {
-    [Export, PartCreationPolicy(CreationPolicy.Shared)]
-    public class FileExporter
+    private ResourceExporter resourceExporter;
+
+    public FileExporter()
     {
-        ResourceExporter resourceExporter;
+        resourceExporter = new ResourceExporter();
+    }
 
-        public FileExporter()
-        {
-            resourceExporter = new ResourceExporter();
-        }
+    [ImportingConstructor]
+    public FileExporter(ResourceExporter resourceExporter)
+    {
+        this.resourceExporter = resourceExporter;
+    }
 
-        [ImportingConstructor]
-        public FileExporter(ResourceExporter resourceExporter)
-        {
-            this.resourceExporter = resourceExporter;
-        }
+    public bool ExportTask(string directory)
+    {
+        return resourceExporter.Export("Costura.dll", new FileInfo(Path.Combine(directory, "Costura.dll")));
+    }
 
-        public bool ExportTask(string directory)
-        {
-            return resourceExporter.Export("Costura.dll", new FileInfo(Path.Combine(directory, "Costura.dll")));
-        }
+    public bool ExportTask(DirectoryInfo directory)
+    {
+        return resourceExporter.Export("Costura.dll", new FileInfo(Path.Combine(directory.FullName, "Costura.dll")));
+    }
 
-        public bool ExportTask(DirectoryInfo directory)
-        {
-            return resourceExporter.Export("Costura.dll", new FileInfo(Path.Combine(directory.FullName, "Costura.dll")));
-        }
-
-     }
 }

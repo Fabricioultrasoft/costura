@@ -1,5 +1,4 @@
-﻿using CosturaVSPackage;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 
 [TestFixture]

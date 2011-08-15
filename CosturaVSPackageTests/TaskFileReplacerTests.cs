@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using CosturaVSPackage;
 using NSubstitute;
 using NUnit.Framework;
 using VsPackageCommon;

@@ -8,105 +8,101 @@ using EnvDTE;
 using Microsoft.VisualStudio.Shell;
 using VsPackageCommon;
 
-namespace CosturaVSPackage
+[Export, PartCreationPolicy(CreationPolicy.Shared)]
+public class MenuConfigure
 {
-    [Export, PartCreationPolicy(CreationPolicy.Shared)]
-    public class MenuConfigure
+    private OleMenuCommand configureCommand;
+    private OleMenuCommand disableCommand;
+    private CurrentProjectFinder currentProjectFinder;
+    private ExceptionDialog exceptionDialog;
+    private ConfigureMenuCallback configureMenuCallback;
+    private DisableMenuConfigure disableMenuConfigure;
+    private IMenuCommandService menuCommandService;
+
+    [ImportingConstructor]
+    public MenuConfigure(CurrentProjectFinder currentProjectFinder, ExceptionDialog exceptionDialog, ConfigureMenuCallback configureMenuCallback, DisableMenuConfigure disableMenuConfigure, IMenuCommandService menuCommandService)
     {
+        this.exceptionDialog = exceptionDialog;
+        this.configureMenuCallback = configureMenuCallback;
+        this.disableMenuConfigure = disableMenuConfigure;
+        this.menuCommandService = menuCommandService;
+        this.currentProjectFinder = currentProjectFinder;
+    }
 
-        OleMenuCommand configureCommand;
-        OleMenuCommand disableCommand;
-        CurrentProjectFinder currentProjectFinder;
-        ExceptionDialog exceptionDialog;
-        ConfigureMenuCallback configureMenuCallback;
-        DisableMenuConfigure disableMenuConfigure;
-        IMenuCommandService menuCommandService;
+    public void RegisterMenus()
+    {
+        var vsPackageCmdSet = new Guid("5ce0365b-947a-4dca-b016-ca823deaad0b");
+        var configureCommandId = new CommandID(vsPackageCmdSet, 1);
+        configureCommand = new OleMenuCommand(delegate { configureMenuCallback.ConfigureCallback(); }, configureCommandId);
+        configureCommand.BeforeQueryStatus += delegate { CommandStatusCheck(); };
+        menuCommandService.AddCommand(configureCommand);
 
-        [ImportingConstructor]
-        public MenuConfigure(CurrentProjectFinder currentProjectFinder, ExceptionDialog exceptionDialog, ConfigureMenuCallback configureMenuCallback, DisableMenuConfigure disableMenuConfigure, IMenuCommandService menuCommandService)
+        var disableCommandId = new CommandID(vsPackageCmdSet, 2);
+        disableCommand = new OleMenuCommand(delegate { disableMenuConfigure.DisableCallback(); }, disableCommandId)
+                             {
+                                 Enabled = false
+                             };
+        disableCommand.BeforeQueryStatus += delegate { CommandStatusCheck(); };
+        menuCommandService.AddCommand(disableCommand);
+    }
+
+    private void CommandStatusCheck()
+    {
+        try
         {
-            this.exceptionDialog = exceptionDialog;
-            this.configureMenuCallback = configureMenuCallback;
-            this.disableMenuConfigure = disableMenuConfigure;
-            this.menuCommandService = menuCommandService;
-            this.currentProjectFinder = currentProjectFinder;
+            disableCommand.Enabled = true;
+            configureCommand.Enabled = true;
+            var project = currentProjectFinder.GetCurrentProject();
+            if (project == null)
+            {
+                disableCommand.Enabled = false;
+                configureCommand.Enabled = false;
+                return;
+            }
+            disableCommand.Enabled = ContainsEmbedTask(project);
         }
-
-        public void RegisterMenus()
+        catch (COMException exception)
         {
-            var vsPackageCmdSet = new Guid("5ce0365b-947a-4dca-b016-ca823deaad0b");
-            var configureCommandId = new CommandID(vsPackageCmdSet, 1);
-            configureCommand = new OleMenuCommand(delegate { configureMenuCallback.ConfigureCallback(); }, configureCommandId);
-            configureCommand.BeforeQueryStatus += delegate { CommandStatusCheck(); };
-            menuCommandService.AddCommand(configureCommand);
-
-            var disableCommandId = new CommandID(vsPackageCmdSet, 2);
-            disableCommand = new OleMenuCommand(delegate { disableMenuConfigure.DisableCallback(); }, disableCommandId)
-                                 {
-                                     Enabled = false
-                                 };
-            disableCommand.BeforeQueryStatus += delegate { CommandStatusCheck(); };
-            menuCommandService.AddCommand(disableCommand);
+            exceptionDialog.HandleException(exception);
         }
-
-        void CommandStatusCheck()
+        catch (Exception exception)
         {
-            try
-            {
-                disableCommand.Enabled = true;
-                configureCommand.Enabled = true;
-                var project = currentProjectFinder.GetCurrentProject();
-                if (project == null)
-                {
-                    disableCommand.Enabled = false;
-                    configureCommand.Enabled = false;
-                    return;
-                }
-                disableCommand.Enabled = ContainsEmbedTask(project);
-            }
-            catch (COMException exception)
-            {
-                exceptionDialog.HandleException(exception);
-            }
-            catch (Exception exception)
-            {
-                exceptionDialog.HandleException(exception);
-            }
+            exceptionDialog.HandleException(exception);
         }
+    }
 
-        static bool ContainsEmbedTask(Project project)
+    private static bool ContainsEmbedTask(Project project)
+    {
+        string fullName;
+        try
         {
-            string fullName;
-            try
+            fullName = project.FullName;
+        }
+        catch (NotImplementedException)
+        {
+            //HACK: can happen during an upgrade from VS 2008
+            return false;
+        }
+        try
+        {
+            //HACK: for when VS incorrectly calls configure when no project is avaliable
+            if (string.IsNullOrWhiteSpace(fullName))
             {
-                fullName = project.FullName;
-            }
-            catch (NotImplementedException)
-            {
-                //HACK: can happen during an upgrade from VS 2008
                 return false;
             }
-            try
+            var xDocument = XDocument.Load(fullName);
+            var target = xDocument.BuildDescendants("Target")
+                .Where(x => string.Equals((string) x.Attribute("Name"), "AfterBuild", StringComparison.InvariantCultureIgnoreCase)
+                ).FirstOrDefault();
+            if (target == null)
             {
-                //HACK: for when VS incorrectly calls configure when no project is avaliable
-                if (string.IsNullOrWhiteSpace(fullName))
-                {
-                    return false;
-                }
-                var xDocument = XDocument.Load(fullName);
-                var target = xDocument.BuildDescendants("Target")
-                    .Where(x => string.Equals((string)x.Attribute("Name"), "AfterBuild", StringComparison.InvariantCultureIgnoreCase)
-                    ).FirstOrDefault();
-                if (target == null)
-                {
-                    return false;
-                }
-                return target.BuildDescendants("Costura.EmbedTask").Count() > 0;
+                return false;
             }
-            catch (Exception exception)
-            {
-                throw new Exception(string.Format("Could not check project '{0}' for weaving task", fullName), exception);
-            }
+            return target.BuildDescendants("Costura.EmbedTask").Count() > 0;
+        }
+        catch (Exception exception)
+        {
+            throw new Exception(string.Format("Could not check project '{0}' for weaving task", fullName), exception);
         }
     }
 }

@@ -136,11 +136,6 @@
     <Compile Include="ProjectInjector.cs" />
     <Compile Include="ProjectReader.cs" />
     <Compile Include="ProjectRemover.cs" />
-    <Compile Include="Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="CosturaVSPackagePackage.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />
@@ -150,11 +145,6 @@
     <Compile Include="XDocumentExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="VSPackage.resx">
       <MergeWithCTO>true</MergeWithCTO>
       <ManifestResourceName>VSPackage</ManifestResourceName>
