@@ -6,9 +6,9 @@ using VsPackageCommon;
 [Export, PartCreationPolicy(CreationPolicy.Shared)]
 public class DisableMenuConfigure
 {
-    private CurrentProjectFinder currentProjectFinder;
-    private ErrorDisplayer errorDisplayer;
-    private ExceptionDialog exceptionDialog;
+    CurrentProjectFinder currentProjectFinder;
+    ErrorDisplayer errorDisplayer;
+    ExceptionDialog exceptionDialog;
 
     [ImportingConstructor]
     public DisableMenuConfigure(CurrentProjectFinder currentProjectFinder, ErrorDisplayer errorDisplayer, ExceptionDialog exceptionDialog)
@@ -23,6 +23,10 @@ public class DisableMenuConfigure
         try
         {
             var project = currentProjectFinder.GetCurrentProject();
+            if (UnsaveProjectChecker.HasUnsavedPendingChanges(project))
+            {
+                return;
+            }
             errorDisplayer.ShowInfo(string.Format("Costura: Removed from the project '{0}'. However no binary files will be removed in case they are being used by other projects.", project.Name));
             new ProjectRemover(project.FullName);
         }

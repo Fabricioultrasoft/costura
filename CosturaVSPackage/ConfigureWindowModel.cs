@@ -6,7 +6,7 @@ public class ConfigureWindowModel : INotifyPropertyChanged
 {
     public event PropertyChangedEventHandler PropertyChanged;
 
-    private string toolsDirectory;
+    string toolsDirectory;
 
     public string ToolsDirectory
     {
@@ -18,7 +18,7 @@ public class ConfigureWindowModel : INotifyPropertyChanged
         }
     }
 
-    private bool overwrite;
+    bool overwrite;
 
     public bool Overwrite
     {
@@ -30,7 +30,7 @@ public class ConfigureWindowModel : INotifyPropertyChanged
         }
     }
 
-    private bool includeDebugSymbols;
+    bool includeDebugSymbols;
 
     public bool IncludeDebugSymbols
     {
@@ -42,7 +42,7 @@ public class ConfigureWindowModel : INotifyPropertyChanged
         }
     }
 
-    private bool deleteReferences;
+    bool deleteReferences;
 
     public bool DeleteReferences
     {
@@ -54,7 +54,7 @@ public class ConfigureWindowModel : INotifyPropertyChanged
         }
     }
 
-    private string targetPath;
+    string targetPath;
 
     public string TargetPath
     {
@@ -67,7 +67,7 @@ public class ConfigureWindowModel : INotifyPropertyChanged
     }
 
 
-    private bool deriveTargetPathFromBuildEngine;
+    bool deriveTargetPathFromBuildEngine;
 
     public bool DeriveTargetPathFromBuildEngine
     {
@@ -79,7 +79,7 @@ public class ConfigureWindowModel : INotifyPropertyChanged
         }
     }
 
-    private MessageImportance messageImportance;
+    MessageImportance messageImportance;
 
     public MessageImportance MessageImportance
     {
@@ -92,7 +92,7 @@ public class ConfigureWindowModel : INotifyPropertyChanged
     }
 
 
-    private string version;
+    string version;
 
     public string Version
     {
@@ -110,7 +110,7 @@ public class ConfigureWindowModel : INotifyPropertyChanged
         Version = CurrentVersion.Version.ToString();
     }
 
-    private void OnPropertyChanged(string propertyName)
+    void OnPropertyChanged(string propertyName)
     {
         var handler = PropertyChanged;
         if (handler != null)

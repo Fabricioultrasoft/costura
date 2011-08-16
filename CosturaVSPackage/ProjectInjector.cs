@@ -14,7 +14,7 @@ public class ProjectInjector
     public bool? IncludeDebugSymbols;
     public string ProjectFile;
     public bool? DeleteReferences;
-    private XDocument xDocument;
+    XDocument xDocument;
 
     public void Execute()
     {
@@ -25,7 +25,7 @@ public class ProjectInjector
         xDocument.Save(ProjectFile);
     }
 
-    private void InjectEmbedTask()
+    void InjectEmbedTask()
     {
 
         var target = GetOrCreateAfterBuildTarget();
@@ -64,7 +64,7 @@ public class ProjectInjector
     }
 
 
-    private XElement GetOrCreateAfterBuildTarget()
+    XElement GetOrCreateAfterBuildTarget()
     {
         var target = xDocument.BuildDescendants("Target")
             .Where(x => string.Equals((string) x.Attribute("Name"), "AfterBuild", StringComparison.InvariantCultureIgnoreCase)).FirstOrDefault();
@@ -76,7 +76,7 @@ public class ProjectInjector
         return target;
     }
 
-    private void InjectUsingEmbedTask()
+    void InjectUsingEmbedTask()
     {
         var count = xDocument.BuildDescendants("UsingTask")
             .Where(x => (string) x.Attribute("TaskName") == "Costura.EmbedTask").ToList();

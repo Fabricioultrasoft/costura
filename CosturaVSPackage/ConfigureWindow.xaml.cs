@@ -14,7 +14,7 @@ public partial class ConfigureWindow
 
     public ConfigureWindowModel Model { get; private set; }
 
-    private void Ok(object sender, RoutedEventArgs e)
+    void Ok(object sender, RoutedEventArgs e)
     {
         var errors = Model.GetErrors();
         if (errors != null)
@@ -27,17 +27,17 @@ public partial class ConfigureWindow
     }
 
 
-    private void Cancel(object sender, RoutedEventArgs e)
+    void Cancel(object sender, RoutedEventArgs e)
     {
         Close();
     }
 
-    private void SetDefaultToolsDirectory(object sender, RoutedEventArgs e)
+    void SetDefaultToolsDirectory(object sender, RoutedEventArgs e)
     {
         Model.ToolsDirectory = @"$(SolutionDir)Tools\";
     }
 
-    private void SetDefaultTargetPath(object sender, RoutedEventArgs e)
+    void SetDefaultTargetPath(object sender, RoutedEventArgs e)
     {
         Model.TargetPath = "@(TargetPath)";
     }

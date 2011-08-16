@@ -140,6 +140,7 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />
     <Compile Include="SolutionEvents.cs" />
+    <Compile Include="TaskFileProcessor.cs" />
     <Compile Include="TaskFileReplacer.cs" />
     <Compile Include="VersionChecker.cs" />
     <Compile Include="XDocumentExtensions.cs" />

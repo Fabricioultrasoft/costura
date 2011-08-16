@@ -5,7 +5,7 @@ using System.Xml.Linq;
 
 public class ProjectRemover
 {
-    private XDocument xDocument;
+    XDocument xDocument;
 
     public ProjectRemover(string projectFile)
     {
@@ -16,14 +16,14 @@ public class ProjectRemover
         xDocument.Save(projectFile);
     }
 
-    private void RemoveEmbedTask()
+    void RemoveEmbedTask()
     {
         xDocument.BuildDescendants("Target")
             .Where(x => string.Equals((string) x.Attribute("Name"), "AfterBuild", StringComparison.InvariantCultureIgnoreCase))
             .Descendants(XDocumentExtensions.BuildNamespace + "Costura.EmbedTask").Remove();
     }
 
-    private void RemoveUsingTask()
+    void RemoveUsingTask()
     {
         xDocument.BuildDescendants("UsingTask")
             .Where(x => (string) x.Attribute("TaskName") == "Costura.EmbedTask").Remove();

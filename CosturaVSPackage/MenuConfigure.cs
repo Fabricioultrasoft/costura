@@ -11,13 +11,13 @@ using VsPackageCommon;
 [Export, PartCreationPolicy(CreationPolicy.Shared)]
 public class MenuConfigure
 {
-    private OleMenuCommand configureCommand;
-    private OleMenuCommand disableCommand;
-    private CurrentProjectFinder currentProjectFinder;
-    private ExceptionDialog exceptionDialog;
-    private ConfigureMenuCallback configureMenuCallback;
-    private DisableMenuConfigure disableMenuConfigure;
-    private IMenuCommandService menuCommandService;
+    OleMenuCommand configureCommand;
+    OleMenuCommand disableCommand;
+    CurrentProjectFinder currentProjectFinder;
+    ExceptionDialog exceptionDialog;
+    ConfigureMenuCallback configureMenuCallback;
+    DisableMenuConfigure disableMenuConfigure;
+    IMenuCommandService menuCommandService;
 
     [ImportingConstructor]
     public MenuConfigure(CurrentProjectFinder currentProjectFinder, ExceptionDialog exceptionDialog, ConfigureMenuCallback configureMenuCallback, DisableMenuConfigure disableMenuConfigure, IMenuCommandService menuCommandService)
@@ -46,7 +46,7 @@ public class MenuConfigure
         menuCommandService.AddCommand(disableCommand);
     }
 
-    private void CommandStatusCheck()
+    void CommandStatusCheck()
     {
         try
         {
@@ -71,7 +71,7 @@ public class MenuConfigure
         }
     }
 
-    private static bool ContainsEmbedTask(Project project)
+    static bool ContainsEmbedTask(Project project)
     {
         string fullName;
         try

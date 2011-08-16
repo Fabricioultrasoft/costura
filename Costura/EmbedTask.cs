@@ -62,7 +62,7 @@ namespace Costura
             return !logger.ErrorHasBeenRaised;
         }
 
-        private void HandleException(Exception exception)
+        void HandleException(Exception exception)
         {
             Exception = exception;
             if (exception is WeavingException)

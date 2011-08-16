@@ -5,7 +5,7 @@ using VsPackageCommon;
 [Export, PartCreationPolicy(CreationPolicy.Shared)]
 public class FileExporter
 {
-    private ResourceExporter resourceExporter;
+    ResourceExporter resourceExporter;
 
     public FileExporter()
     {

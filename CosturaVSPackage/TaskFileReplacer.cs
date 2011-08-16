@@ -9,8 +9,8 @@ using VsPackageCommon;
 [Export, PartCreationPolicy(CreationPolicy.Shared)]
 public class TaskFileReplacer
 {
-    private ErrorDisplayer errorDisplayer;
-    private FileExporter fileExporter;
+    ErrorDisplayer errorDisplayer;
+    FileExporter fileExporter;
     public string taskFilePath;
 
     [ImportingConstructor]
@@ -81,7 +81,7 @@ public class TaskFileReplacer
                         });
     }
 
-    private static void WrapInMutex(Action action)
+    static void WrapInMutex(Action action)
     {
         ThreadPool.QueueUserWorkItem(x =>
                                          {

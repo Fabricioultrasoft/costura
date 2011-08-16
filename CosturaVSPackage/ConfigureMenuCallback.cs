@@ -9,11 +9,11 @@ using VsPackageCommon;
 [Export, PartCreationPolicy(CreationPolicy.Shared)]
 public class ConfigureMenuCallback
 {
-    private FileExporter fileExporter;
-    private TaskFileReplacer taskFileReplacer;
-    private CurrentProjectFinder currentProjectFinder;
-    private FullPathResolver fullPathResolver;
-    private ExceptionDialog exceptionDialog;
+    FileExporter fileExporter;
+    TaskFileReplacer taskFileReplacer;
+    CurrentProjectFinder currentProjectFinder;
+    FullPathResolver fullPathResolver;
+    ExceptionDialog exceptionDialog;
 
     [ImportingConstructor]
     public ConfigureMenuCallback(CurrentProjectFinder currentProjectFinder, FileExporter fileExporter, TaskFileReplacer taskFileReplacer, FullPathResolver fullPathResolver, ExceptionDialog exceptionDialog)
@@ -30,8 +30,11 @@ public class ConfigureMenuCallback
     {
         try
         {
-            //http://mrpmorris.blogspot.com/2007/05/convert-absolute-path-to-relative-path.html
             var project = currentProjectFinder.GetCurrentProject();
+            if (UnsaveProjectChecker.HasUnsavedPendingChanges(project))
+            {
+                return;
+            }
 
             var projectReader = new ProjectReader(project.FullName);
 
@@ -60,10 +63,10 @@ public class ConfigureMenuCallback
     }
 
     [DllImport("user32.dll")]
-    private static extern IntPtr GetActiveWindow();
+    static extern IntPtr GetActiveWindow();
 
 
-    private void Configure(ConfigureWindowModel model, Project project)
+    void Configure(ConfigureWindowModel model, Project project)
     {
 
         var directoryInfo = fullPathResolver.GetFullPath(model.ToolsDirectory, project);

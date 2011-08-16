@@ -6,7 +6,7 @@ using Microsoft.Build.Framework;
 
 public class ProjectReader
 {
-    private string projectFile;
+    string projectFile;
     public string ToolsDirectory;
     public string TargetPath;
     public MessageImportance? MessageImportance;
@@ -37,7 +37,7 @@ public class ProjectReader
         return null;
     }
 
-    private void SetWeavingProps()
+    void SetWeavingProps()
     {
         var xDocument = XDocument.Load(projectFile);
         var children =
@@ -76,7 +76,7 @@ public class ProjectReader
         return bool.Parse(attribute.Value);
     }
 
-    private static MessageImportance? ConvertToEnum(string messageImportance)
+    static MessageImportance? ConvertToEnum(string messageImportance)
     {
         if (!string.IsNullOrWhiteSpace(messageImportance))
         {
