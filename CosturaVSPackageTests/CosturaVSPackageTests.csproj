@@ -94,6 +94,6 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="BeforeBuild">
-    <Exec Command="&quot;$(SolutionDir)Tools\PepitaGet.exe&quot;" />
+    <Exec command='"$(SolutionDir)Tools\PepitaGet.exe"' />
   </Target>
 </Project>
