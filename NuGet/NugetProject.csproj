@@ -46,10 +46,9 @@
     <GetAssemblyIdentity AssemblyFiles="$(SolutionDir)Costura\bin\$(ConfigurationName)\Costura.dll">
       <Output TaskParameter="Assemblies" ItemName="TaskAssembly" />
     </GetAssemblyIdentity>
-    <FileUpdate Files="$(SolutionDir)NuGetBuild\Costura.nuspec" Regex="version&gt;([^&lt;]*)&lt;/version" ReplacementText="version&gt;%(TaskAssembly.Version)&lt;/version" />
     <FileUpdate Files="$(SolutionDir)NuGetBuild\Tools\install.ps1" Regex="9.9" ReplacementText="%(TaskAssembly.Version)" />
     
-    <Exec command='"$(SolutionDir)Tools\PepitaPackage.exe" "$(SolutionDir)NuGetBuild"' />
+    <Exec command='"$(SolutionDir)Tools\PepitaPackage.exe" "$(SolutionDir)NuGetBuild" MetadataAssembly="$(SolutionDir)Costura\bin\$(ConfigurationName)\Costura.dll"' />
   </Target>
   <ItemGroup>
     <ProjectReference Include="..\Costura\Costura.csproj">

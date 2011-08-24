@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Costura</id>
-    <version>9.9.9.9</version>
+    <version>$version$</version>
     <title>Costura</title>
     <authors>Simon Cropp</authors>
     <owners>Simon Cropp</owners>
