@@ -32,8 +32,7 @@
   </ItemGroup>
   <Target Name="Build" DependsOnTargets="NuGetBuild" />
   <Target Name="ReBuild" DependsOnTargets="NuGetBuild" />
-  <UsingTask TaskName="NuGet.MSBuild.NuGet" AssemblyFile="$(SolutionDir)Tools\NuGet.MSBuild.dll" />
-  <UsingTask TaskName="MSBuild.Community.Tasks.FileUpdate" AssemblyFile="$(SolutionDir)Tools\MSBuild.Community.Tasks.dll" />
+  <UsingTask TaskName="FileUpdate" AssemblyFile="$(SolutionDir)Tools\SimpleMsBuildTasks.dll" />
   <Target Name="NuGetBuild" DependsOnTargets="Clean">
     <MakeDir Directories="$(SolutionDir)NuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)CosturaVsPackage\bin\$(ConfigurationName)\CosturaVsPackage.vsix" DestinationFolder="$(SolutionDir)NuGetBuild\Tools" />
@@ -46,7 +45,7 @@
     <GetAssemblyIdentity AssemblyFiles="$(SolutionDir)Costura\bin\$(ConfigurationName)\Costura.dll">
       <Output TaskParameter="Assemblies" ItemName="TaskAssembly" />
     </GetAssemblyIdentity>
-    <FileUpdate Files="$(SolutionDir)NuGetBuild\Tools\install.ps1" Regex="9.9" ReplacementText="%(TaskAssembly.Version)" />
+    <FileUpdate File="$(SolutionDir)NuGetBuild\Tools\install.ps1" Regex="9.9" ReplacementText="%(TaskAssembly.Version)" />
     
     <Exec command='"$(SolutionDir)Tools\PepitaPackage.exe" "$(SolutionDir)NuGetBuild" MetadataAssembly="$(SolutionDir)Costura\bin\$(ConfigurationName)\Costura.dll"' />
   </Target>
