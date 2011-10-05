@@ -85,7 +85,7 @@ namespace Costura
                 container.ComposeExportedValue(BuildEngine);
                 container.ComposeExportedValue(logger);
                 CheckForInvalidConfig();
-                container.GetExportedValue<TargetPathFinder>().Execute("TargetPath");
+                container.GetExportedValue<TargetPathFinder>().Execute();
 
                 logger.LogMessage(string.Format("\tTargetPath: {0}", TargetPath));
 

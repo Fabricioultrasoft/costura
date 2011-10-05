@@ -36,13 +36,13 @@
     <Reference Include="Microsoft.Build.Tasks.v4.0" />
     <Reference Include="Microsoft.Build.Utilities.v4.0" />
     <Reference Include="Mono.Cecil">
-      <HintPath>..\Lib\Cecil\Mono.Cecil.dll</HintPath>
+      <HintPath>..\packages\Mono.Cecil.0.9.5.1\lib\net40\Mono.Cecil.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Mdb">
-      <HintPath>..\Lib\Cecil\Mono.Cecil.Mdb.dll</HintPath>
+      <HintPath>..\packages\Mono.Cecil.0.9.5.1\lib\net40\Mono.Cecil.Mdb.dll</HintPath>
     </Reference>
     <Reference Include="Mono.Cecil.Pdb">
-      <HintPath>..\Lib\Cecil\Mono.Cecil.Pdb.dll</HintPath>
+      <HintPath>..\packages\Mono.Cecil.0.9.5.1\lib\net40\Mono.Cecil.Pdb.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -73,6 +73,7 @@
     <Compile Include="..\CommonAssemblyInfo.cs" />
     <Compile Include="ReferenceDeleter.cs" />
     <Compile Include="ResourceEmbedder.cs" />
+    <Compile Include="TargetPathFinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">
@@ -96,6 +97,6 @@
     <Copy SourceFiles="$(TargetDir)Merged\$(TargetName).dll" DestinationFolder="$(SolutionDir)ForSample" />
   </Target>
   <Target Name="BeforeBuild">
-    <Exec Command='"&quot;$(SolutionDir)Tools\PepitaGet.exe"' />
+    <Exec Command="&quot;&quot;$(SolutionDir)Tools\PepitaGet.exe&quot;" />
   </Target>
 </Project>
