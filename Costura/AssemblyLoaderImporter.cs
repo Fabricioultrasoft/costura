@@ -12,17 +12,19 @@ namespace Costura
 	{
 		ModuleReader moduleReader;
 		AssemblyResolver assemblyResolver;
+		EmbedTask embedTask;
 		ConstructorInfo instructionConstructorInfo;
 		TypeDefinition targetType;
 		TypeDefinition sourceType;
 	    public MethodDefinition AttachMethod;
 
 		[ImportingConstructor]
-		public AssemblyLoaderImporter(ModuleReader moduleReader, AssemblyResolver assemblyResolver)
+		public AssemblyLoaderImporter(ModuleReader moduleReader, AssemblyResolver assemblyResolver, EmbedTask embedTask)
 		{
 			instructionConstructorInfo = typeof (Instruction).GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {typeof (OpCode), typeof (object)}, null);
 			this.moduleReader = moduleReader;
 			this.assemblyResolver = assemblyResolver;
+		    this.embedTask = embedTask;
 		}
 
 		public void Execute()
@@ -37,16 +39,31 @@ namespace Costura
 
 			var moduleDefinition = GetTemplateModuleDefinition();
 
-			sourceType = moduleDefinition.Types.First(x => x.Name == "ILTemplate");
+            if (!embedTask.CreateTemporaryAssemblies)
+            {
+                sourceType = moduleDefinition.Types.First(x => x.Name == "ILTemplate");   
+            }else
+            {
+                sourceType = moduleDefinition.Types.First(x => x.Name == "ILTemplateWithTempAssembly");   
+            }
 
 			targetType = new TypeDefinition("Costura", "AssemblyLoader", sourceType.Attributes, Resolve(sourceType.BaseType));
 			moduleReader.Module.Types.Add(targetType);
+            CopyFields(sourceType);
 			CopyMethod(sourceType.Methods.First(x => x.Name == "ResolveAssembly"));
 
 			AttachMethod = CopyMethod(sourceType.Methods.First(x => x.Name == "Attach"));
 		}
 
-		private ModuleDefinition GetTemplateModuleDefinition()
+	    private void CopyFields(TypeDefinition source)
+	    {
+	        foreach (var field in source.Fields)
+	        {
+	            targetType.Fields.Add(new FieldDefinition(field.Name, field.Attributes, Resolve(field.FieldType)));
+	        }
+	    }
+
+	    private ModuleDefinition GetTemplateModuleDefinition()
 		{
 			var readerParameters = new ReaderParameters
 			                       	{
@@ -167,7 +184,12 @@ namespace Costura
 			{
 				return Resolve((TypeReference) operand);
 			}
-			return operand;
+            if(operand is FieldReference)
+            {
+                var field = targetType.Fields.First(f => f.Name == ((FieldReference) operand).Name);
+                return field;
+            }
+		    return operand;
 		}
 	}
 }

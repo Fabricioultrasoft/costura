@@ -16,6 +16,8 @@ namespace Costura
         public bool Overwrite { set; get; }
         public bool IncludeDebugSymbols { set; get; }
         public bool DeleteReferences { set; get; }
+        public bool CreateTemporaryAssemblies { get; set; }
+
         public string TargetPath { set; get; }
         public string MessageImportance { set; get; }
         public string References { get; set; }
