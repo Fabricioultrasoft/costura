@@ -4,6 +4,7 @@ using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using WeavingCommon;
+using MethodAttributes = Mono.Cecil.MethodAttributes;
 
 namespace Costura
 {
@@ -91,27 +92,47 @@ namespace Costura
 
 		MethodDefinition CopyMethod(MethodDefinition templateMethod)
 		{
-			var newMethod = new MethodDefinition(templateMethod.Name, templateMethod.Attributes, Resolve(templateMethod.ReturnType))
-			                	{
-			                		Body =
-			                			{
-			                				InitLocals = true
-			                			}
-			                	};
+            if(templateMethod.IsPInvokeImpl)
+            {
+                var newMethod = new MethodDefinition(templateMethod.Name, templateMethod.Attributes,
+                                                     Resolve(templateMethod.ReturnType));
 
-			foreach (var variableDefinition in templateMethod.Body.Variables)
-			{
-				newMethod.Body.Variables.Add(new VariableDefinition(Resolve(variableDefinition.VariableType)));
-			}
-			foreach (var parameterDefinition in templateMethod.Parameters)
-			{
-				newMethod.Parameters.Add(new ParameterDefinition(Resolve(parameterDefinition.ParameterType)));
-			}
+                var moduleRef = new ModuleReference(templateMethod.PInvokeInfo.Module.Name);
+                moduleReader.Module.ModuleReferences.Add(moduleRef);
 
-			CopyInstructions(templateMethod, newMethod);
-			CopyExceptionHandlers(templateMethod, newMethod);
-			targetType.Methods.Add(newMethod);
-			return newMethod;
+                newMethod.PInvokeInfo = new PInvokeInfo(templateMethod.PInvokeInfo.Attributes, templateMethod.PInvokeInfo.EntryPoint, moduleRef);
+                newMethod.IsPInvokeImpl = true;
+                foreach (var parameterDefinition in templateMethod.Parameters)
+                {
+                    newMethod.Parameters.Add(new ParameterDefinition(Resolve(parameterDefinition.ParameterType)));
+                }
+
+                targetType.Methods.Add(newMethod);
+                return newMethod;
+            }else
+            {
+			    var newMethod = new MethodDefinition(templateMethod.Name, templateMethod.Attributes, Resolve(templateMethod.ReturnType))
+			                	    {
+			                		    Body =
+			                			    {
+			                				    InitLocals = true
+			                			    }
+			                	    };
+
+			    foreach (var variableDefinition in templateMethod.Body.Variables)
+			    {
+				    newMethod.Body.Variables.Add(new VariableDefinition(Resolve(variableDefinition.VariableType)));
+			    }
+			    foreach (var parameterDefinition in templateMethod.Parameters)
+			    {
+				    newMethod.Parameters.Add(new ParameterDefinition(Resolve(parameterDefinition.ParameterType)));
+			    }
+
+			    CopyInstructions(templateMethod, newMethod);
+			    CopyExceptionHandlers(templateMethod, newMethod);
+			    targetType.Methods.Add(newMethod);
+			    return newMethod; 
+            }
 		}
 
 		void CopyExceptionHandlers(MethodDefinition templateMethod, MethodDefinition newMethod)
@@ -176,9 +197,16 @@ namespace Costura
 				var methodReference = (MethodReference) operand;
 				if (methodReference.DeclaringType == sourceType)
 				{
-					return targetType.Methods.First(x => x.Name == methodReference.Name);
+				    var mr = targetType.Methods.FirstOrDefault(x => x.Name == methodReference.Name);
+                    if(mr == null)
+                    {
+                        //little poetic license... :). .Resolve() doesn't work with "extern" methods
+                        return CopyMethod(sourceType.Methods.First(m => m.Name == methodReference.Name 
+                                                                    && m.Parameters.Count == methodReference.Parameters.Count));
+                    }
+				    return mr;
 				}
-				return moduleReader.Module.Import(methodReference.Resolve());
+			    return moduleReader.Module.Import(methodReference.Resolve());
 			}
 			if (operand is TypeReference)
 			{
