@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 using NSubstitute;
 using NUnit.Framework;
 using VsPackageCommon;
@@ -17,6 +18,7 @@ public class TaskFileReplacerTests
 		var taskFileReplacer = new TaskFileReplacer(errorDisplayer, null);
 		taskFileReplacer.ClearFile();
 		taskFileReplacer.AddFile(new DirectoryInfo(@"C:\Foo"));
+        Thread.Sleep(100);
 		Assert.AreEqual("C:\\Foo\r\n", File.ReadAllText(taskFileReplacer.taskFilePath));
 	}
 
@@ -26,8 +28,10 @@ public class TaskFileReplacerTests
 		var errorDisplayer = Substitute.For<ErrorDisplayer>();
 		var taskFileReplacer = new TaskFileReplacer(errorDisplayer, null);
 		taskFileReplacer.ClearFile();
-		taskFileReplacer.AddFile(new DirectoryInfo(@"C:\Foo"));
-		taskFileReplacer.AddFile(new DirectoryInfo(@"C:\Foo2"));
+        taskFileReplacer.AddFile(new DirectoryInfo(@"C:\Foo"));
+        Thread.Sleep(100);
+        taskFileReplacer.AddFile(new DirectoryInfo(@"C:\Foo2"));
+        Thread.Sleep(100);
 		Assert.AreEqual("C:\\Foo\r\nC:\\Foo2\r\n", File.ReadAllText(taskFileReplacer.taskFilePath));
 	}
 
@@ -54,11 +58,14 @@ public class TaskFileReplacerTests
 		taskFileReplacer.ClearFile();
 
 		var dir1 = new DirectoryInfo(Environment.CurrentDirectory + @"..\..\..\Dir1");
-		taskFileReplacer.AddFile(dir1);
+        taskFileReplacer.AddFile(dir1);
+        Thread.Sleep(100);
 		var dir2 = new DirectoryInfo(Environment.CurrentDirectory + @"..\..\..\Dir2");
-		taskFileReplacer.AddFile(dir2);
+        taskFileReplacer.AddFile(dir2);
+        Thread.Sleep(100);
 
-		taskFileReplacer.CheckForFilesToUpdate();
+        taskFileReplacer.CheckForFilesToUpdate();
+        Thread.Sleep(100);
 		Assert.AreEqual(dir1.FullName + "\r\n" + dir2.FullName + "\r\n", File.ReadAllText(taskFileReplacer.taskFilePath));
 	}
 }
