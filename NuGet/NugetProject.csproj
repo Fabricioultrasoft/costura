@@ -33,6 +33,8 @@
   <Target Name="Build" DependsOnTargets="NuGetBuild" />
   <Target Name="ReBuild" DependsOnTargets="NuGetBuild" />
   <UsingTask TaskName="FileUpdate" AssemblyFile="$(SolutionDir)Tools\SimpleMsBuildTasks.dll" />
+  <UsingTask TaskName="PepitaPackage.WeavingTask" AssemblyFile="$(SolutionDir)Tools\PepitaPackage.dll" />
+
   <Target Name="NuGetBuild" DependsOnTargets="Clean">
     <MakeDir Directories="$(SolutionDir)NuGetBuild" />
     <Copy SourceFiles="$(SolutionDir)CosturaVsPackage\bin\$(ConfigurationName)\CosturaVsPackage.vsix" DestinationFolder="$(SolutionDir)NuGetBuild\Tools" />
@@ -47,8 +49,8 @@
     </GetAssemblyIdentity>
     <FileUpdate File="$(SolutionDir)NuGetBuild\Tools\install.ps1" Regex="9.9" ReplacementText="%(TaskAssembly.Version)" />
     
-    <Exec command='"$(SolutionDir)Tools\PepitaPackage.exe" "$(SolutionDir)NuGetBuild" MetadataAssembly="$(SolutionDir)Costura\bin\$(ConfigurationName)\Costura.dll"' />
-  </Target>
+   <PepitaPackage.WeavingTask  NuGetBuildDirectory="$(SolutionDir)NuGetBuild" MetadataAssembly="$(SolutionDir)Costura\bin\$(ConfigurationName)\Costura.dll"/>
+	 </Target>
   <ItemGroup>
     <ProjectReference Include="..\Costura\Costura.csproj">
       <Project>{F4870A6E-7408-4CED-9F4A-E06DB0C95833}</Project>
