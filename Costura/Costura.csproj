@@ -71,6 +71,7 @@
     <Compile Include="AssemblyLoaderImporter.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />
+    <Compile Include="MsCoreReferenceFinder.cs" />
     <Compile Include="ReferenceDeleter.cs" />
     <Compile Include="ResourceEmbedder.cs" />
     <Compile Include="TargetPathFinder.cs" />
@@ -96,7 +97,8 @@
     <MakeDir Directories="$(SolutionDir)ForSample" />
     <Copy SourceFiles="$(TargetDir)Merged\$(TargetName).dll" DestinationFolder="$(SolutionDir)ForSample" />
   </Target>
+  <UsingTask TaskName="PepitaGet.WeavingTask" AssemblyFile="$(SolutionDir)Tools\PepitaGet.dll" />
   <Target Name="BeforeBuild">
-    <Exec Command="&quot;&quot;$(SolutionDir)Tools\PepitaGet.exe&quot;" />
+    <PepitaGet.WeavingTask />
   </Target>
 </Project>

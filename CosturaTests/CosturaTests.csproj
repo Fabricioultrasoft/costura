@@ -74,7 +74,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <UsingTask TaskName="PepitaGet.WeavingTask" AssemblyFile="$(SolutionDir)Tools\PepitaGet.dll" />
   <Target Name="BeforeBuild">
-    <Exec command="&quot;$(SolutionDir)Tools\PepitaGet.exe&quot;" />
-  </Target>
+    <PepitaGet.WeavingTask />
+  </Target>  
 </Project>

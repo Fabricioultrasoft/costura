@@ -92,8 +92,9 @@
     <Folder Include="Dir1\" />
     <Folder Include="Dir2\" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />	
+  <UsingTask TaskName="PepitaGet.WeavingTask" AssemblyFile="$(SolutionDir)Tools\PepitaGet.dll" />
   <Target Name="BeforeBuild">
-    <Exec command='"$(SolutionDir)Tools\PepitaGet.exe"' />
-  </Target>
+    <PepitaGet.WeavingTask />
+  </Target> 
 </Project>
