@@ -4,7 +4,6 @@ using System.Reflection;
 using Mono.Cecil;
 using Mono.Cecil.Cil;
 using WeavingCommon;
-using MethodAttributes = Mono.Cecil.MethodAttributes;
 
 namespace Costura
 {
