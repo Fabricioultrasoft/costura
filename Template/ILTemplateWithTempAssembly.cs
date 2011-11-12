@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Text;
 
-internal static class ILTemplateWithTempAssembly
+static class ILTemplateWithTempAssembly
 {
     [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
     public static extern bool MoveFileEx(string lpExistingFileName, string lpNewFileName, int dwFlags);
@@ -16,12 +16,13 @@ internal static class ILTemplateWithTempAssembly
 
     public static void Attach()
     {
-        AppDomain currentDomain = AppDomain.CurrentDomain;
+        var currentDomain = AppDomain.CurrentDomain;
         currentDomain.AssemblyResolve += ResolveAssembly;
 
         //Create a unique Temp directory for the application path.
-        tempBasePath = Path.Combine(Path.Combine(Path.GetTempPath(), "Costura"),
-                                    CreateMd5Hash(Assembly.GetExecutingAssembly().CodeBase));
+        var md5Hash = CreateMd5Hash(Assembly.GetExecutingAssembly().CodeBase);
+        var prefixPath = Path.Combine(Path.GetTempPath(), "Costura");
+        tempBasePath = Path.Combine(prefixPath, md5Hash);
         CreateDirectory();
     }
 
@@ -60,7 +61,7 @@ internal static class ILTemplateWithTempAssembly
         return Assembly.LoadFile(assemblyTempFilePath);
     }
 
-    private static void CreateDirectory()
+    static void CreateDirectory()
     {
         if (Directory.Exists(tempBasePath))
         {
@@ -75,15 +76,15 @@ internal static class ILTemplateWithTempAssembly
         MoveFileEx(tempBasePath, null, 0x4);
     }
 
-    private static string CreateMd5Hash(string input)
+    static string CreateMd5Hash(string input)
     {
-        using (MD5 md5 = MD5.Create())
+        using (var md5 = MD5.Create())
         {
-            byte[] inputBytes = Encoding.ASCII.GetBytes(input);
-            byte[] hashBytes = md5.ComputeHash(inputBytes);
+            var inputBytes = Encoding.ASCII.GetBytes(input);
+            var hashBytes = md5.ComputeHash(inputBytes);
 
             var sb = new StringBuilder();
-            for (int i = 0; i < hashBytes.Length; i++)
+            for (var i = 0; i < hashBytes.Length; i++)
             {
                 sb.Append(hashBytes[i].ToString("X2"));
             }
