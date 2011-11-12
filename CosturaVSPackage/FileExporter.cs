@@ -9,7 +9,6 @@ public class FileExporter
 
     public FileExporter()
     {
-        resourceExporter = new ResourceExporter();
     }
 
     [ImportingConstructor]
@@ -18,12 +17,12 @@ public class FileExporter
         this.resourceExporter = resourceExporter;
     }
 
-    public bool ExportTask(string directory)
+    public virtual bool ExportTask(string directory)
     {
         return resourceExporter.Export("Costura.dll", new FileInfo(Path.Combine(directory, "Costura.dll")));
     }
 
-    public bool ExportTask(DirectoryInfo directory)
+    public virtual bool ExportTask(DirectoryInfo directory)
     {
         return resourceExporter.Export("Costura.dll", new FileInfo(Path.Combine(directory.FullName, "Costura.dll")));
     }
