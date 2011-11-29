@@ -32,7 +32,7 @@ public class ProjectReader
         if (firstOrDefault != null)
         {
             var value = firstOrDefault.Value;
-            return value.Substring(0, value.IndexOf("Costura.dll"));
+            return value.Substring(0, value.IndexOf("Costura.dll", StringComparison.OrdinalIgnoreCase));
         }
         return null;
     }
