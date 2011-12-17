@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Application
+class Program
 {
-    class Program
+    static void Main(string[] args)
     {
-        static void Main(string[] args)
-        {
-            var type = Assembly.Load("ImplementationLibrary").GetType("Foo");
-            var instance = (IFoo) Activator.CreateInstance(type);
-            Console.WriteLine(instance.Bar());
-        }
+        //This is contrived. in reality you would have code that determins which assembly and type to load here
+        var type = Assembly.Load("ImplementationLibrary").GetType("Foo");
+        var instance = (IFoo) Activator.CreateInstance(type);
+        Console.WriteLine(instance.Bar());
     }
 }
