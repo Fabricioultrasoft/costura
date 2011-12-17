@@ -58,7 +58,7 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <UsingTask TaskName="Costura.EmbedTask" AssemblyFile="$(SolutionDir)Tools\Costura.dll" />
+  <UsingTask TaskName="Costura.EmbedTask" AssemblyFile="$(SolutionDir)..\ForSample\Costura.dll" />
   <Target Name="AfterBuild">
     <Costura.EmbedTask MessageImportance="High" />
   </Target>
