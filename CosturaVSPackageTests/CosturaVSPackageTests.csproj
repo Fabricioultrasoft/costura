@@ -94,8 +94,8 @@
     <Folder Include="Dir2\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <UsingTask TaskName="PepitaGet.WeavingTask" AssemblyFile="$(SolutionDir)Tools\PepitaGet.dll" />
+  <UsingTask TaskName="PepitaGet.RestorePackagesTask" AssemblyFile="$(SolutionDir)Tools\PepitaGet.dll" />
   <Target Name="BeforeBuild">
-    <PepitaGet.WeavingTask />
+    <PepitaGet.RestorePackagesTask />
   </Target>
 </Project>
