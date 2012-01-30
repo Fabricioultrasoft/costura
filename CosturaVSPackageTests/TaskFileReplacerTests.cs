@@ -3,7 +3,6 @@ using System.IO;
 using System.Threading;
 using NSubstitute;
 using NUnit.Framework;
-using VsPackageCommon;
 
 
 #if (DEBUG)

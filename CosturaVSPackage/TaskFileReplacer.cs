@@ -4,7 +4,6 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using VsPackageCommon;
 
 [Export, PartCreationPolicy(CreationPolicy.Shared)]
 public class TaskFileReplacer

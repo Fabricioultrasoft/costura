@@ -7,7 +7,6 @@ using System.Text;
 using System.Xml.Linq;
 using Costura;
 using Mono.Cecil;
-using XDocumentExtensions = WeavingCommon.XDocumentExtensions;
 
 
 public class WeaverHelper
@@ -65,7 +64,7 @@ public class WeaverHelper
 	{
 		var xDocument = XDocument.Load(projectPath);
 
-		return XDocumentExtensions.BuildDescendants(xDocument, "AssemblyName")
+		return xDocument.BuildDescendants("AssemblyName")
 			.Select(x => x.Value)
 			.First();
 	}
@@ -74,11 +73,11 @@ public class WeaverHelper
 	{
 		var xDocument = XDocument.Load(projectPath);
 
-		var outputPathValue = (from propertyGroup in XDocumentExtensions.BuildDescendants(xDocument, "PropertyGroup")
+		var outputPathValue = (from propertyGroup in xDocument.BuildDescendants("PropertyGroup")
 		                       let condition = ((string) propertyGroup.Attribute("Condition"))
 		                       where (condition != null) &&
 		                             (condition.Trim() == "'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'")
-		                       from outputPath in XDocumentExtensions.BuildDescendants(propertyGroup, "OutputPath")
+		                       from outputPath in propertyGroup.BuildDescendants("OutputPath")
 		                       select outputPath.Value).First();
 #if (!DEBUG)
             outputPathValue = outputPathValue.Replace("Debug", "Release");

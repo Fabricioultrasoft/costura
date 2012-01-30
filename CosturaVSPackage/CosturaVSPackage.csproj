@@ -118,30 +118,43 @@
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="WindowsBase" />
-    <Reference Include="VsPackageCommon">
-      <HintPath>..\Lib\VsPackageCommon.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AllProjectFinder.cs" />
     <Compile Include="ConfigureMenuCallback.cs" />
     <Compile Include="ConfigureWindow.xaml.cs">
       <DependentUpon>ConfigureWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="ConfigureWindowModel.cs" />
+    <Compile Include="CurrentProjectFinder.cs" />
     <Compile Include="CurrentVersion.cs" />
     <Compile Include="Defaulter.cs" />
     <Compile Include="DisableMenuConfigure.cs" />
+    <Compile Include="Wpf\EnumBooleanConverter.cs" />
+    <Compile Include="ErrorDisplayer.cs" />
+    <Compile Include="ExceptionDialog.cs" />
+    <Compile Include="ExceptionExtensions.cs" />
+    <Compile Include="ExceptionWindow.xaml.cs">
+      <DependentUpon>ExceptionWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ExceptionWindowModel.cs" />
     <Compile Include="FileExporter.cs" />
+    <Compile Include="FullPathResolver.cs" />
+    <Compile Include="Wpf\HyperlinkEx.cs" />
+    <Compile Include="Wpf\InverseBooleanConverter.cs" />
     <Compile Include="MenuConfigure.cs" />
     <Compile Include="ProjectInjector.cs" />
+    <Compile Include="ProjectKind.cs" />
     <Compile Include="ProjectReader.cs" />
     <Compile Include="ProjectRemover.cs" />
     <Compile Include="CosturaVSPackagePackage.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />
+    <Compile Include="ResourceExporter.cs" />
     <Compile Include="SolutionEvents.cs" />
     <Compile Include="TaskFileProcessor.cs" />
     <Compile Include="TaskFileReplacer.cs" />
+    <Compile Include="UnsaveProjectChecker.cs" />
     <Compile Include="VersionChecker.cs" />
     <Compile Include="XDocumentExtensions.cs" />
   </ItemGroup>
@@ -180,6 +193,14 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="ConfigureWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ExceptionWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
