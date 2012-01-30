@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using CosturaVsPackage;
 using Microsoft.Build.Framework;
 using NUnit.Framework;
 
