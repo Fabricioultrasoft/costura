@@ -209,12 +209,6 @@
     <UseCodebase>true</UseCodebase>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Costura\Costura.csproj">
-      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
-      <Private>False</Private>
-      <Project>{F4870A6E-7408-4CED-9F4A-E06DB0C95833}</Project>
-      <Name>Costura</Name>
-    </ProjectReference>
     <EmbeddedResource Include="$(SolutionDir)Costura\bin\$(ConfigurationName)\Merged\Costura.dll">
       <Link>Resources\Costura.dll</Link>
       <InProject>false</InProject>

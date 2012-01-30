@@ -1,4 +1,5 @@
 ﻿using System;
+using CosturaVsPackage;
 
 public static class CurrentVersion
 {

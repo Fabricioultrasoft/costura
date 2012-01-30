@@ -15,6 +15,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SourceBundler", "SourceBundle\SourceBundler.csproj", "{AB23D75F-EE9B-455A-BB7C-1DAE292CAC2B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosturaVSPackage", "CosturaVSPackage\CosturaVSPackage.csproj", "{38B5FF46-18A8-41A9-AE17-962766E29373}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F4870A6E-7408-4CED-9F4A-E06DB0C95833} = {F4870A6E-7408-4CED-9F4A-E06DB0C95833}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosturaVSPackageTests", "CosturaVSPackageTests\CosturaVSPackageTests.csproj", "{BCE894C5-8521-4E8B-81A9-D1674224AFE2}"
 EndProject

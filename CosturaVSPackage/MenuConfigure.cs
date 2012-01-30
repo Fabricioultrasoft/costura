@@ -92,13 +92,12 @@ public class MenuConfigure
             }
             var xDocument = XDocument.Load(fullName);
             var target = xDocument.BuildDescendants("Target")
-                .Where(x => string.Equals((string) x.Attribute("Name"), "AfterBuild", StringComparison.InvariantCultureIgnoreCase)
-                ).FirstOrDefault();
+                .FirstOrDefault(x => string.Equals((string) x.Attribute("Name"), "AfterBuild", StringComparison.InvariantCultureIgnoreCase));
             if (target == null)
             {
                 return false;
             }
-            return target.BuildDescendants("Costura.EmbedTask").Count() > 0;
+            return target.BuildDescendants("Costura.EmbedTask").Any();
         }
         catch (Exception exception)
         {
