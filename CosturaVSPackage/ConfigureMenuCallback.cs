@@ -4,7 +4,6 @@ using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using EnvDTE;
-using VsPackageCommon;
 
 [Export, PartCreationPolicy(CreationPolicy.Shared)]
 public class ConfigureMenuCallback

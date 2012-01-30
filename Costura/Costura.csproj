@@ -52,9 +52,6 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WeavingCommon">
-      <HintPath>..\Lib\WeavingCommon.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Template\Template.csproj">
@@ -65,16 +62,26 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyResolver.cs" />
+    <Compile Include="BuildEnginePropertyExtractor.cs" />
+    <Compile Include="CecilExtensions.cs" />
     <Compile Include="DependencyFinder.cs" />
+    <Compile Include="FileChangedChecker.cs" />
+    <Compile Include="Logger.cs" />
     <Compile Include="ModuleLoaderImporter.cs" />
     <Compile Include="EmbedTask.cs" />
     <Compile Include="AssemblyLoaderImporter.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="..\CommonAssemblyInfo.cs" />
+    <Compile Include="ModuleReader.cs" />
+    <Compile Include="ModuleWriter.cs" />
     <Compile Include="MsCoreReferenceFinder.cs" />
+    <Compile Include="ProjectKeyReader.cs" />
     <Compile Include="ReferenceDeleter.cs" />
     <Compile Include="ResourceEmbedder.cs" />
     <Compile Include="TargetPathFinder.cs" />
+    <Compile Include="WeavingException.cs" />
+    <Compile Include="XDocumentExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config">

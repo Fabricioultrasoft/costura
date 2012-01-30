@@ -39,7 +39,7 @@ public class ProjectReader
 
     void SetWeavingProps()
     {
-        var xDocument = XDocument.Load(projectFile);
+        var xDocument = ReadXDocument();
         var children =
             from target in xDocument.BuildDescendants("Target")
             let targetName = (string) target.Attribute("Name")
@@ -65,6 +65,18 @@ public class ProjectReader
         Overwrite = first.Overwrite;
         IncludeDebugSymbols = first.IncludeDebugSymbols;
         DeleteReferences = first.DeleteReferences;
+    }
+
+    XDocument ReadXDocument()
+    {
+        try
+        {
+            return XDocument.Load(projectFile);
+        }
+        catch (Exception exception)
+        {
+            throw new Exception(string.Format("Could not load project file '{0}'.", projectFile),exception);
+        }
     }
 
     public static bool? ToBool(XAttribute attribute)

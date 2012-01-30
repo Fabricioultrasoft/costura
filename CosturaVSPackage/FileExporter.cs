@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.Composition;
 using System.IO;
-using VsPackageCommon;
 
 [Export, PartCreationPolicy(CreationPolicy.Shared)]
 public class FileExporter

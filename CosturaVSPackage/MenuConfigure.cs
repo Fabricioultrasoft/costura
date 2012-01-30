@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Xml.Linq;
 using EnvDTE;
 using Microsoft.VisualStudio.Shell;
-using VsPackageCommon;
+
 
 [Export, PartCreationPolicy(CreationPolicy.Shared)]
 public class MenuConfigure

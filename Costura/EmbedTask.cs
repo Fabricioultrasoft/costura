@@ -6,12 +6,10 @@ using System.Diagnostics;
 using System.IO;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-using WeavingCommon;
-using Logger = WeavingCommon.Logger;
 
 namespace Costura
 {
-    public class EmbedTask : Task, IConfig
+    public class EmbedTask : Task
     {
         public bool Overwrite { set; get; }
         public bool IncludeDebugSymbols { set; get; }
@@ -45,7 +43,6 @@ namespace Costura
             {
                 logger = new Logger
                 {
-                    SenderName = "Costura",
                     BuildEngine = BuildEngine,
                 };
                 logger.Initialise(MessageImportance);
@@ -79,10 +76,9 @@ namespace Costura
 
         void Inner()
         {
-            using (var catalog = CatalogBuilder.GetCatalog())
+            using (var catalog = new AssemblyCatalog(GetType().Assembly))
             using (var container = new CompositionContainer(catalog))
             {
-                container.ComposeExportedValue<IConfig>(this);
                 container.ComposeExportedValue(this);
                 container.ComposeExportedValue(BuildEngine);
                 container.ComposeExportedValue(logger);
