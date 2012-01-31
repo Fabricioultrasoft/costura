@@ -4,17 +4,16 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using CosturaVsPackage;
 
 [Export, PartCreationPolicy(CreationPolicy.Shared)]
 public class TaskFileReplacer
 {
     ErrorDisplayer errorDisplayer;
-    FileExporter fileExporter;
+    CosturaFileExporter fileExporter;
     public string taskFilePath;
 
     [ImportingConstructor]
-    public TaskFileReplacer(ErrorDisplayer errorDisplayer, FileExporter fileExporter)
+    public TaskFileReplacer(ErrorDisplayer errorDisplayer, CosturaFileExporter fileExporter)
     {
         this.errorDisplayer = errorDisplayer;
         this.fileExporter = fileExporter;

@@ -3,20 +3,19 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
-using CosturaVsPackage;
 using EnvDTE;
 
 [Export, PartCreationPolicy(CreationPolicy.Shared)]
 public class ConfigureMenuCallback
 {
-    FileExporter fileExporter;
+    CosturaFileExporter fileExporter;
     TaskFileReplacer taskFileReplacer;
     CurrentProjectFinder currentProjectFinder;
     FullPathResolver fullPathResolver;
     ExceptionDialog exceptionDialog;
 
     [ImportingConstructor]
-    public ConfigureMenuCallback(CurrentProjectFinder currentProjectFinder, FileExporter fileExporter, TaskFileReplacer taskFileReplacer, FullPathResolver fullPathResolver, ExceptionDialog exceptionDialog)
+    public ConfigureMenuCallback(CurrentProjectFinder currentProjectFinder, CosturaFileExporter fileExporter, TaskFileReplacer taskFileReplacer, FullPathResolver fullPathResolver, ExceptionDialog exceptionDialog)
     {
         this.currentProjectFinder = currentProjectFinder;
         this.fullPathResolver = fullPathResolver;
@@ -80,7 +79,7 @@ public class ConfigureMenuCallback
         }
 
         var defaulter = new Defaulter();
-        var projectInjector = new ProjectInjector
+        var projectInjector = new CosturaProjectInjector
                                   {
                                       ProjectFile = project.FullName
                                   };

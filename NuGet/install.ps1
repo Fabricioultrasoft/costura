@@ -22,10 +22,10 @@ Add-Type -Path $assemblyPath
 
 $buildTaskDir = [System.IO.Path]::Combine($project.Object.DTE.Solution.FullName,"..\Tools")
 
-$resourceExporter = New-Object CosturaVsPackage.FileExporter
+$resourceExporter = New-Object CosturaFileExporter
 $resourceExporter.ExportTask($buildTaskDir)
 
-$projectInjector = New-Object CosturaVsPackage.ProjectInjector
+$projectInjector = New-Object CosturaProjectInjector
 $projectInjector.ToolsDirectory = "`$(SolutionDir)Tools"
 $projectInjector.ProjectFile = $project.FullName 
 $projectInjector.Execute()

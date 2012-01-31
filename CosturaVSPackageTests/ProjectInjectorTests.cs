@@ -1,5 +1,4 @@
 ﻿using System.IO;
-using CosturaVsPackage;
 using Microsoft.Build.Framework;
 using NUnit.Framework;
 
@@ -15,7 +14,7 @@ public class ProjectInjectorTests
 		try
 		{
 
-			var injector = new ProjectInjector
+            var injector = new CosturaProjectInjector
 			               	{
 			               		ToolsDirectory = @"Tools\",
 			               		ProjectFile = targetFileInfo.FullName,
@@ -50,7 +49,7 @@ public class ProjectInjectorTests
 
 		try
 		{
-			var injector = new ProjectInjector
+            var injector = new CosturaProjectInjector
 			               	{
 			               		ToolsDirectory = @"Tools2\",
 			               		ProjectFile = targetFileInfo.FullName,
