@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
-using CosturaVsPackage;
+
 using NSubstitute;
 using NUnit.Framework;
 
@@ -51,7 +51,7 @@ public class TaskFileReplacerTests
 	public void CheckForFilesToUpdateExportFails()
 	{
 		var errorDisplayer = Substitute.For<ErrorDisplayer>();
-		var resourceExporter = Substitute.For<FileExporter>(Substitute.For<ResourceExporter>());
+        var resourceExporter = Substitute.For<CosturaFileExporter>(Substitute.For<ResourceExporter>());
 		resourceExporter.ExportTask(Arg.Any<string>())
 			.Returns(false);
 		var taskFileReplacer = new TaskFileReplacer(errorDisplayer, resourceExporter);

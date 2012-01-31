@@ -1,5 +1,4 @@
-﻿using CosturaVsPackage;
-using Microsoft.Build.Framework;
+﻿using Microsoft.Build.Framework;
 
 public class Defaulter
 {
@@ -23,7 +22,7 @@ public class Defaulter
         return str;
     }
 
-    public void FromModel(ProjectInjector projectInjector, ConfigureWindowModel configureWindowModel)
+    public void FromModel(CosturaProjectInjector projectInjector, ConfigureWindowModel configureWindowModel)
     {
 
         if (!configureWindowModel.DeriveTargetPathFromBuildEngine)
