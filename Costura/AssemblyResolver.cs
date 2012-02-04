@@ -82,11 +82,19 @@ public class AssemblyResolver : IAssemblyResolver
             if (File.Exists(file))
             {
                 var assemblyName = AssemblyName.GetAssemblyName(file);
-                //TODO: check key
                 if (assemblyNameReference.Version == null || assemblyName.Version == assemblyNameReference.Version)
                 {
                     return GetAssembly(file, parameters);
                 }
+            }
+        }
+
+        foreach (var filePath in references.Values)
+        {
+            var file = Path.Combine(Path.GetDirectoryName(filePath), assemblyNameReference.Name + ".dll");
+            if (File.Exists(file))
+            {
+                return GetAssembly(file, parameters);
             }
         }
 

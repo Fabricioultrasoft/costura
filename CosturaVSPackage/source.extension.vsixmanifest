@@ -3,7 +3,7 @@
   <Identifier Id="1e18710b-e9fc-4b7c-9c27-56237c08a165">
     <Name>Costura</Name>
     <Author>Simon Cropp</Author>
-    <Version>0.9.1.0</Version>
+    <Version>0.9.2.0</Version>
     <Description xml:space="preserve">Merges the dependencies of a project.</Description>
     <Locale>1033</Locale>
     <MoreInfoUrl>http://code.google.com/p/costura/</MoreInfoUrl>
