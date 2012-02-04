@@ -4,10 +4,11 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Reflection;
 using Costura;
+using System.Linq;
 using Mono.Cecil;
 
-[Export(typeof (AssemblyResolver))]
-[Export(typeof (IAssemblyResolver))]
+[Export(typeof(AssemblyResolver))]
+[Export(typeof(IAssemblyResolver))]
 [PartCreationPolicy(CreationPolicy.Shared)]
 public class AssemblyResolver : IAssemblyResolver
 {
@@ -76,32 +77,36 @@ public class AssemblyResolver : IAssemblyResolver
             return GetAssembly(fileFromDerivedReferences, parameters);
         }
 
-        foreach (var filePath in references.Values)
+        return TryToReadFromDirs(assemblyNameReference, parameters);
+    }
+
+    AssemblyDefinition TryToReadFromDirs(AssemblyNameReference assemblyNameReference, ReaderParameters parameters)
+    {
+        var filesWithMatchingName = SearchDirForMatchingName(assemblyNameReference).ToList();
+        foreach (var filePath in filesWithMatchingName)
         {
-            var file = Path.Combine(Path.GetDirectoryName(filePath), assemblyNameReference.Name + ".dll");
-            if (File.Exists(file))
+            var assemblyName = AssemblyName.GetAssemblyName(filePath);
+            if (assemblyNameReference.Version == null || assemblyName.Version == assemblyNameReference.Version)
             {
-                var assemblyName = AssemblyName.GetAssemblyName(file);
-                if (assemblyNameReference.Version == null || assemblyName.Version == assemblyNameReference.Version)
-                {
-                    return GetAssembly(file, parameters);
-                }
+                return GetAssembly(filePath, parameters);
             }
         }
-
-        foreach (var filePath in references.Values)
+        foreach (var filePath in filesWithMatchingName.OrderByDescending(s => AssemblyName.GetAssemblyName(s).Version))
         {
-            var file = Path.Combine(Path.GetDirectoryName(filePath), assemblyNameReference.Name + ".dll");
-            if (File.Exists(file))
-            {
-                return GetAssembly(file, parameters);
-            }
+            return GetAssembly(filePath, parameters);
         }
 
-        var joinedReferences = String.Join(Environment.NewLine, references.Values);
+        var joinedReferences = String.Join(Environment.NewLine, references.Values.OrderBy(x => x));
         throw new Exception(string.Format("Can not find '{0}'.{1}Tried:{1}{2}", assemblyNameReference.FullName, Environment.NewLine, joinedReferences));
     }
 
+    IEnumerable<string> SearchDirForMatchingName(AssemblyNameReference assemblyNameReference)
+    {
+        var fileName = assemblyNameReference.Name + ".dll";
+        return references.Values
+            .Select(x => Path.Combine(Path.GetDirectoryName(x), fileName))
+            .Where(File.Exists);
+    }
 
     public AssemblyDefinition Resolve(string fullName)
     {
@@ -117,7 +122,6 @@ public class AssemblyResolver : IAssemblyResolver
 
         return Resolve(AssemblyNameReference.Parse(fullName), parameters);
     }
-
     public void Execute()
     {
 
