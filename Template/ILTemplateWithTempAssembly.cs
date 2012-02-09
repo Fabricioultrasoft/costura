@@ -29,7 +29,24 @@ static class ILTemplateWithTempAssembly
 
     public static Assembly ResolveAssembly(object sender, ResolveEventArgs args)
     {
-        var name = new AssemblyName(args.Name).Name;
+        var currentDomain = AppDomain.CurrentDomain;
+        var assems = currentDomain.GetAssemblies();
+        var name = new AssemblyName(args.Name).Name.ToLowerInvariant();
+        foreach (var assembly in assems)
+        {
+            var fullName = assembly.FullName.ToLowerInvariant();
+            var indexOf = fullName.IndexOf(',');
+            if (indexOf > 1)
+            {
+                fullName = fullName.Substring(0, indexOf);
+            }
+
+            if (fullName == name)
+            {
+                return assembly;
+            }
+        }
+
         var assemblyResourceName = string.Format("Costura.{0}.dll", name);
         var executingAssembly = Assembly.GetExecutingAssembly();
 
