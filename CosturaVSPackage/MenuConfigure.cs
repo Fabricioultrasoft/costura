@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Design;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Xml.Linq;
@@ -59,7 +60,15 @@ public class MenuConfigure
                 configureCommand.Enabled = false;
                 return;
             }
-            disableCommand.Enabled = ContainsEmbedTask(project);
+            var xmlForProject = LoadXmlForProject(project);
+            if (xmlForProject == null)
+            {
+
+                disableCommand.Enabled = false;
+                configureCommand.Enabled = false;
+                return;
+            }
+            disableCommand.Enabled = ContainsEmbedTask(xmlForProject);
         }
         catch (COMException exception)
         {
@@ -71,7 +80,7 @@ public class MenuConfigure
         }
     }
 
-    static bool ContainsEmbedTask(Project project)
+    static XDocument LoadXmlForProject(Project project)
     {
         string fullName;
         try
@@ -81,27 +90,44 @@ public class MenuConfigure
         catch (NotImplementedException)
         {
             //HACK: can happen during an upgrade from VS 2008
-            return false;
+            return null;
+        }
+        //cant add to deployment projects
+        if (fullName.EndsWith(".vdproj"))
+        {
+            return null;
+        }
+        //HACK: for when VS incorrectly calls configure when no project is avaliable
+        if (string.IsNullOrWhiteSpace(fullName))
+        {
+            return null;
+        }
+        //HACK: for web projects
+        if (!File.Exists(fullName))
+        {
+            return null;
         }
         try
         {
-            //HACK: for when VS incorrectly calls configure when no project is avaliable
-            if (string.IsNullOrWhiteSpace(fullName))
-            {
-                return false;
-            }
-            var xDocument = XDocument.Load(fullName);
-            var target = xDocument.BuildDescendants("Target")
-                .FirstOrDefault(x => string.Equals((string) x.Attribute("Name"), "AfterBuild", StringComparison.InvariantCultureIgnoreCase));
-            if (target == null)
-            {
-                return false;
-            }
-            return target.BuildDescendants("Costura.EmbedTask").Any();
+            //validate is xml
+            return XDocument.Load(fullName);
+        }
+        catch (Exception)
+        {
+            //this means it is not xml and we cant do anything with it
+            return null;
+        }
+    }
+
+    static bool ContainsEmbedTask(XDocument xDocument)
+    {
+        try
+        {
+            return xDocument.BuildDescendants("Costura.EmbedTask").Any();
         }
         catch (Exception exception)
         {
-            throw new Exception(string.Format("Could not check project '{0}' for weaving task", fullName), exception);
+            throw new Exception("Could not check project for Costura.EmbedTask", exception);
         }
     }
 }
