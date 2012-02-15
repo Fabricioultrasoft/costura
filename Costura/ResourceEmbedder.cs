@@ -47,7 +47,7 @@ public class ResourceEmbedder : IDisposable
         logger.LogMessage(string.Format("\tEmbedding '{0}'", fullPath));
         var fileStream = File.OpenRead(fullPath);
         streams.Add(fileStream);
-        var resource = new EmbeddedResource("Costura." + Path.GetFileName(fullPath).ToLowerInvariant(), ManifestResourceAttributes.Private, fileStream);
+        var resource = new EmbeddedResource("costura." + Path.GetFileName(fullPath).ToLowerInvariant(), ManifestResourceAttributes.Private, fileStream);
         moduleReader.Module.Resources.Add(resource);
     }
 

@@ -8,7 +8,8 @@ using NUnit.Framework;
 public abstract class BaseTaskTests
 {
 	string projectPath;
-	Assembly assembly;
+	Assembly inMemoryTemplateAssembly;
+	Assembly tempFileTemplateAssembly;
 
 	protected BaseTaskTests(string projectPath)
 	{
@@ -22,23 +23,44 @@ public abstract class BaseTaskTests
 	[TestFixtureSetUp]
 	public void Setup()
 	{
-		var weaverHelper = new WeaverHelper(projectPath);
-		assembly = weaverHelper.Assembly;
+		tempFileTemplateAssembly = new WeaverHelper(projectPath,true).Assembly;
+		inMemoryTemplateAssembly = new WeaverHelper(projectPath,false).Assembly;
 	}
 
 
 	[Test]
-	public void Simple()
+	public void SimpleInMemory()
 	{
-		var instance = assembly.GetInstance("ClassToTest");
-		Assert.AreEqual("Hello", instance.Foo());
+        var instance2 = inMemoryTemplateAssembly.GetInstance("ClassToTest");
+		Assert.AreEqual("Hello", instance2.Foo());
 	}
 	[Test]
-	public void ThrowException()
+	public void SimpleTempFile()
+	{
+        var instance1 = tempFileTemplateAssembly.GetInstance("ClassToTest");
+		Assert.AreEqual("Hello", instance1.Foo());
+	}
+
+	[Test]
+	public void ThrowExceptionTempFile()
 	{
 		try
 		{
-			var instance = assembly.GetInstance("ClassToTest");
+			var instance = tempFileTemplateAssembly.GetInstance("ClassToTest");
+			instance.ThrowException();
+		}
+		catch (Exception exception)
+		{
+			Debug.WriteLine(exception.StackTrace);
+			Assert.IsTrue(exception.StackTrace.Contains("ClassToReference.cs:line"));	
+		}
+	}
+	[Test]
+	public void ThrowExceptionInMemory()
+	{
+		try
+		{
+			var instance = inMemoryTemplateAssembly.GetInstance("ClassToTest");
 			instance.ThrowException();
 		}
 		catch (Exception exception)
@@ -50,15 +72,26 @@ public abstract class BaseTaskTests
 
 #if(DEBUG)
 	[Test]
-	public void PeVerify()
+	public void PeVerifyTempFile()
 	{
-		Verifier.Verify(assembly.CodeBase.Remove(0, 8));
+		Verifier.Verify(tempFileTemplateAssembly.CodeBase.Remove(0, 8));
+	}
+	[Test]
+	public void PeVerifyInMemory()
+	{
+		Verifier.Verify(inMemoryTemplateAssembly.CodeBase.Remove(0, 8));
 	}
 
 	[Test]
-	public void EnsureOnly1RefToMscorLib()
+	public void EnsureOnly1RefToMscorLibInMemory()
 	{
-		var moduleDefinition = ModuleDefinition.ReadModule(assembly.CodeBase.Remove(0, 8));
+		var moduleDefinition = ModuleDefinition.ReadModule(inMemoryTemplateAssembly.CodeBase.Remove(0, 8));
+		Assert.AreEqual(1, moduleDefinition.AssemblyReferences.Count(x => x.Name == "mscorlib"));
+	}
+	[Test]
+	public void EnsureOnly1RefToMscorLibTempFile()
+	{
+		var moduleDefinition = ModuleDefinition.ReadModule(tempFileTemplateAssembly.CodeBase.Remove(0, 8));
 		Assert.AreEqual(1, moduleDefinition.AssemblyReferences.Count(x => x.Name == "mscorlib"));
 	}
 #endif
