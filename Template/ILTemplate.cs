@@ -12,10 +12,62 @@ internal static class ILTemplate
 
     public static Assembly ResolveAssembly(object sender, ResolveEventArgs args)
     {
-        var currentDomain = AppDomain.CurrentDomain;
-        var assems = currentDomain.GetAssemblies();
         var name = new AssemblyName(args.Name).Name.ToLowerInvariant();
-        foreach (var assembly in assems)
+        var existingAssembly = ReadExistingAssembly(name);
+        if (existingAssembly != null)
+        {
+            return existingAssembly;
+        }
+
+        var prefix = string.Concat("costura.", name);
+        var executingAssembly = Assembly.GetExecutingAssembly();
+
+        byte[] assemblyData;
+        using (var assemblyStream = GetAssemblyStream(executingAssembly, prefix))
+        {
+            if (assemblyStream == null)
+            {
+                return null;
+            }
+            assemblyData = ReadStream(assemblyStream);
+        }
+
+        using (var pdbStream = GetDebugStream(executingAssembly, prefix))
+        {
+            if (pdbStream != null)
+            {
+                var pdbData = ReadStream(pdbStream);
+                return Assembly.Load(assemblyData, pdbData);
+            }
+        }
+
+        return Assembly.Load(assemblyData);
+    }
+
+    static byte[] ReadStream(Stream atream)
+    {
+        var data = new Byte[atream.Length];
+        atream.Read(data, 0, data.Length);
+        return data;
+    }
+
+    static Stream GetDebugStream(Assembly executingAssembly, string prefix)
+    {
+        var pdbName = string.Concat(prefix, ".pdb");
+        return executingAssembly.GetManifestResourceStream(pdbName);
+    }
+
+    static Stream GetAssemblyStream(Assembly executingAssembly, string prefix)
+    {
+        var dllName = string.Concat(prefix, ".dll");
+        return executingAssembly.GetManifestResourceStream(dllName);
+    }
+
+    public static Assembly ReadExistingAssembly(string name)
+    {
+        var currentDomain = AppDomain.CurrentDomain;
+        var assemblies = currentDomain.GetAssemblies();
+        foreach (var assembly in assemblies)
         {
             var fullName = assembly.FullName.ToLowerInvariant();
             var indexOf = fullName.IndexOf(',');
@@ -29,30 +81,6 @@ internal static class ILTemplate
                 return assembly;
             }
         }
-
-        var assemblyResourceName = string.Format("Costura.{0}.dll", name);
-        var executingAssembly = Assembly.GetExecutingAssembly();
-
-        using (var assemblyStream = executingAssembly.GetManifestResourceStream(assemblyResourceName))
-        {
-            if (assemblyStream == null)
-            {
-                return null;
-            }
-            var assemblyData = new Byte[assemblyStream.Length];
-            assemblyStream.Read(assemblyData, 0, assemblyData.Length);
-
-            var pdbName = Path.ChangeExtension(assemblyResourceName, "pdb");
-            using (var pdbStream = executingAssembly.GetManifestResourceStream(pdbName))
-            {
-                if (pdbStream != null)
-                {
-                    var pdbData = new Byte[pdbStream.Length];
-                    pdbStream.Read(pdbData, 0, pdbData.Length);
-                    return Assembly.Load(assemblyData, pdbData);
-                }
-            }
-            return Assembly.Load(assemblyData);
-        }
+        return null;
     }
 }

@@ -29,50 +29,42 @@ static class ILTemplateWithTempAssembly
 
     public static Assembly ResolveAssembly(object sender, ResolveEventArgs args)
     {
-        var currentDomain = AppDomain.CurrentDomain;
-        var assems = currentDomain.GetAssemblies();
         var name = new AssemblyName(args.Name).Name.ToLowerInvariant();
-        foreach (var assembly in assems)
+        var existingAssembly = ReadExistingAssembly(name);
+        if (existingAssembly != null)
         {
-            var fullName = assembly.FullName.ToLowerInvariant();
-            var indexOf = fullName.IndexOf(',');
-            if (indexOf > 1)
-            {
-                fullName = fullName.Substring(0, indexOf);
-            }
-
-            if (fullName == name)
-            {
-                return assembly;
-            }
+            return existingAssembly;
         }
 
-        var assemblyResourceName = string.Format("Costura.{0}.dll", name);
+        var prefix = string.Concat("costura.", name);
+
+        var assemblyTempFilePath = Path.Combine(tempBasePath, string.Concat(prefix,".dll"));
+        if (File.Exists(assemblyTempFilePath))
+        {
+            return Assembly.LoadFile(assemblyTempFilePath);
+        }
+
         var executingAssembly = Assembly.GetExecutingAssembly();
 
-        var assemblyTempFilePath = Path.Combine(tempBasePath, assemblyResourceName);
-        if (!File.Exists(assemblyTempFilePath))
+
+        using (var assemblyStream = GetAssemblyStream(executingAssembly, prefix))
         {
-            using (var assemblyStream = executingAssembly.GetManifestResourceStream(assemblyResourceName))
+            if (assemblyStream == null)
             {
-                if (assemblyStream == null)
-                {
-                    return null;
-                }
-                var assemblyData = new Byte[assemblyStream.Length];
-                assemblyStream.Read(assemblyData, 0, assemblyData.Length);
-                File.WriteAllBytes(assemblyTempFilePath, assemblyData);
-                var pdbName = Path.ChangeExtension(assemblyResourceName, "pdb");
-                using (var pdbStream = executingAssembly.GetManifestResourceStream(pdbName))
-                {
-                    if (pdbStream != null)
-                    {
-                        var pdbData = new Byte[pdbStream.Length];
-                        pdbStream.Read(pdbData, 0, pdbData.Length);
-                        var assemblyPdbTempFilePath = Path.Combine(tempBasePath, pdbName);
-                        File.WriteAllBytes(assemblyPdbTempFilePath, pdbData);
-                    }
-                }
+                return null;
+            }
+            var assemblyData = ReadStream(assemblyStream);
+            File.WriteAllBytes(assemblyTempFilePath, assemblyData);
+        }
+
+        using (var pdbStream = GetDebugStream(executingAssembly, prefix))
+        {
+            if (pdbStream != null)
+            {
+                var pdbData = ReadStream(pdbStream);
+                var pdbTempFilePath = Path.Combine(tempBasePath, string.Concat(prefix, ".dll"));
+                var assemblyPdbTempFilePath = Path.Combine(tempBasePath, pdbTempFilePath);
+                File.WriteAllBytes(assemblyPdbTempFilePath, pdbData);
             }
         }
         return Assembly.LoadFile(assemblyTempFilePath);
@@ -107,5 +99,45 @@ static class ILTemplateWithTempAssembly
             }
             return sb.ToString();
         }
+    }
+
+    static byte[] ReadStream(Stream atream)
+    {
+        var data = new Byte[atream.Length];
+        atream.Read(data, 0, data.Length);
+        return data;
+    }
+
+    static Stream GetDebugStream(Assembly executingAssembly, string prefix)
+    {
+        var pdbName = string.Concat(prefix, ".pdb");
+        return executingAssembly.GetManifestResourceStream(pdbName);
+    }
+
+    static Stream GetAssemblyStream(Assembly executingAssembly, string prefix)
+    {
+        var dllName = string.Concat(prefix, ".dll");
+        return executingAssembly.GetManifestResourceStream(dllName);
+    }
+
+    public static Assembly ReadExistingAssembly(string name)
+    {
+        var currentDomain = AppDomain.CurrentDomain;
+        var assemblies = currentDomain.GetAssemblies();
+        foreach (var assembly in assemblies)
+        {
+            var fullName = assembly.FullName.ToLowerInvariant();
+            var indexOf = fullName.IndexOf(',');
+            if (indexOf > 1)
+            {
+                fullName = fullName.Substring(0, indexOf);
+            }
+
+            if (fullName == name)
+            {
+                return assembly;
+            }
+        }
+        return null;
     }
 }

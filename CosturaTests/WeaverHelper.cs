@@ -15,15 +15,23 @@ public class WeaverHelper
 	string assemblyPath;
 	public Assembly Assembly { get; set; }
 
-	public WeaverHelper(string projectPath)
+    public WeaverHelper(string projectPath, bool createTemporaryAssemblies)
 	{
 		this.projectPath = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\", projectPath));
 
 		GetAssemblyPath();
 
 
-		var newAssembly = assemblyPath.Replace(".dll", "2.dll");
-		var pdbFileName = Path.ChangeExtension(assemblyPath, "pdb");
+		string newAssembly;
+        if (createTemporaryAssemblies)
+        {
+            newAssembly = assemblyPath.Replace(".dll", "TempFile.dll");
+        }
+        else
+        {
+            newAssembly = assemblyPath.Replace(".dll", "MemoryFile.dll");
+        }
+        var pdbFileName = Path.ChangeExtension(assemblyPath, "pdb");
 		var newPdbFileName = Path.ChangeExtension(newAssembly, "pdb");
 		File.Copy(assemblyPath, newAssembly, true);
 		File.Copy(pdbFileName, newPdbFileName, true);
@@ -38,7 +46,8 @@ public class WeaverHelper
 		                		BuildEngine = myBuildEngine,
 		                		References = GetReferences(),
 		                		DeleteReferences = false,
-		                		ReferenceCopyLocalPaths = referenceCopyLocalPaths
+		                		ReferenceCopyLocalPaths = referenceCopyLocalPaths,
+                                CreateTemporaryAssemblies = createTemporaryAssemblies
 		                	};
 
 		var execute = embedTask.Execute();

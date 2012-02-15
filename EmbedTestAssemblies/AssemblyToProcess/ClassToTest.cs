@@ -1,5 +1,4 @@
-﻿
-public class ClassToTest
+﻿public class ClassToTest
 {
 	public string Foo()
 	{
@@ -11,3 +10,6 @@ public class ClassToTest
 	}
 }
 
+namespace Costura
+{
+}
