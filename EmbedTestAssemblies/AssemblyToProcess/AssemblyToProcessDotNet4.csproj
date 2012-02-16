@@ -54,14 +54,11 @@
     <ProjectReference Include="AssemblyToReferencePreEmbedDotNet4.csproj">
       <Project>{7F056E4B-2F28-44F1-A577-F14701FBA2EC}</Project>
       <Name>AssemblyToReferencePreEmbedDotNet4</Name>
-      <Private>False</Private>
+      <Private>True</Private>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterBuild">
-   <Copy
-            SourceFiles=".\bin\$(ConfigurationName)PreEmbedDotNet4\AssemblyToReferencePreEmbed.dll"
-            DestinationFolder="$(TargetDir)"
-        />
+    <Copy SourceFiles=".\bin\$(ConfigurationName)PreEmbedDotNet4\AssemblyToReferencePreEmbed.dll" DestinationFolder="$(TargetDir)" />
   </Target>
 </Project>
