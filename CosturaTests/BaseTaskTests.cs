@@ -40,6 +40,18 @@ public abstract class BaseTaskTests
         var instance1 = tempFileTemplateAssembly.GetInstance("ClassToTest");
 		Assert.AreEqual("Hello", instance1.Foo());
 	}
+	[Test]
+	public void SimpleInMemoryPreEmbed()
+	{
+        var instance2 = inMemoryTemplateAssembly.GetInstance("ClassToTest");
+		Assert.AreEqual("Hello", instance2.Foo2());
+	}
+	[Test]
+    public void SimpleTempFilePreEmbed()
+	{
+        var instance1 = tempFileTemplateAssembly.GetInstance("ClassToTest");
+		Assert.AreEqual("Hello", instance1.Foo2());
+	}
 
 	[Test]
 	public void ThrowExceptionTempFile()

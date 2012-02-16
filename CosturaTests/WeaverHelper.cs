@@ -102,8 +102,11 @@ public class WeaverHelper
 		var assemblyNameReferences = ModuleDefinition.ReadModule(assemblyPath).AssemblyReferences;
 		foreach (var assemblyNameReference in assemblyNameReferences)
 		{
-			builder.Append(referenceFinder.Resolve(assemblyNameReference));
-			builder.Append(";");
+            if (!assemblyNameReference.Name.Contains("PreEmbed"))
+            {
+                builder.Append(referenceFinder.Resolve(assemblyNameReference));
+                builder.Append(";");
+            }
 		}
 		builder.Append(referenceFinder.Resolve("System"));
 		builder.Append(";");
@@ -119,7 +122,7 @@ public class WeaverHelper
 		var assemblyNameReferences = ModuleDefinition.ReadModule(assemblyPath).AssemblyReferences;
 		foreach (var assemblyNameReference in assemblyNameReferences)
 		{
-			if (assemblyNameReference.FullName.Contains("Reference"))
+			if (!assemblyNameReference.FullName.Contains("PreEmbed"))
 			{
 				yield return referenceFinder.Resolve(assemblyNameReference);
 			}

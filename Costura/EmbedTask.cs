@@ -104,6 +104,7 @@ namespace Costura
                 container.GetExportedValue<ModuleLoaderImporter>().Execute();
                 container.GetExportedValue<DependencyFinder>().Execute();
                 container.GetExportedValue<ProjectKeyReader>().Execute();
+                container.GetExportedValue<ResourceCaseFixer>().Execute();
                 using (var resourceEmbedder = container.GetExportedValue<ResourceEmbedder>())
                 {
                     resourceEmbedder.Execute();

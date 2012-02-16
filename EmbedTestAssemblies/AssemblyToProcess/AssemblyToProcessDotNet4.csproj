@@ -38,8 +38,10 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
+    <EmbeddedResource Include=".\bin\$(ConfigurationName)PreEmbedDotNet4\AssemblyToReferencePreEmbed.dll">
+      <Visible>false</Visible>
+      <LogicalName>Costura.AssemblyToReferencePreEmbed.dll</LogicalName>
+    </EmbeddedResource>
     <Compile Include="AssemblyLoader.cs" />
     <Compile Include="ClassToTest.cs" />
   </ItemGroup>
@@ -49,6 +51,17 @@
       <Name>AssemblyToReferenceDotNet4</Name>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="AssemblyToReferencePreEmbedDotNet4.csproj">
+      <Project>{7F056E4B-2F28-44F1-A577-F14701FBA2EC}</Project>
+      <Name>AssemblyToReferencePreEmbedDotNet4</Name>
+      <Private>False</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="AfterBuild">
+   <Copy
+            SourceFiles=".\bin\$(ConfigurationName)PreEmbedDotNet4\AssemblyToReferencePreEmbed.dll"
+            DestinationFolder="$(TargetDir)"
+        />
+  </Target>
 </Project>
