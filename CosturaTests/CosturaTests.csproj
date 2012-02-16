@@ -68,7 +68,6 @@
     <Compile Include="AssemblyWithLoadNonExistentAssemblyTests.cs" />
     <Compile Include="BaseTaskTests.cs" />
     <Compile Include="EmbedNet35WeavingTaskTests.cs" />
-    <Compile Include="EmbedNet4WeavingTaskTests.cs" />
     <Compile Include="ReferenceFinder.cs" />
     <Compile Include="StubBuildEngine.cs" />
     <Compile Include="Verifier.cs" />

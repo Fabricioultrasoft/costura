@@ -6,7 +6,7 @@ public class EmbedNet35WeavingTaskTests : BaseTaskTests
 {
 
     public EmbedNet35WeavingTaskTests()
-        : base(@"EmbedTestAssemblies\AssemblyToProcess\AssemblyToProcessDotNet35.csproj")
+        : base(@"EmbedTestAssemblies\AssemblyToProcess\AssemblyToProcess.csproj")
 	{
 	}
 
