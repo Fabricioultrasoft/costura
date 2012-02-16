@@ -8,8 +8,8 @@
     <ProjectGuid>{67091480-17B3-4284-80A1-158587E08DF9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AssemblyToReference</RootNamespace>
-    <AssemblyName>AssemblyToReference</AssemblyName>
+    <RootNamespace>AssemblyToReferenceDotNet35</RootNamespace>
+    <AssemblyName>AssemblyToReferenceDotNet35</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
