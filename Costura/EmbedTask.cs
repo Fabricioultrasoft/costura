@@ -24,6 +24,12 @@ namespace Costura
         //Hack:
         public List<string> ReferenceCopyLocalPaths { get; set; }
         Logger logger;
+        static Version version;
+
+        static EmbedTask()
+        {
+            version = typeof(EmbedTask).Assembly.GetName().Version;
+        }
 
         public EmbedTask()
         {
@@ -35,7 +41,9 @@ namespace Costura
 
         public override bool Execute()
         {
-            BuildEngine.LogMessageEvent(new BuildMessageEventArgs("Costura.EmbedTask Executing (Change MessageImportance to get more or less info)", "", "EmbedTask", Microsoft.Build.Framework.MessageImportance.High));
+            var message = string.Format("Costura.EmbedTask v{0} Executing (Change MessageImportance to get more or less info)", version);
+            var buildMessageEventArgs = new BuildMessageEventArgs(message, "", "EmbedTask", Microsoft.Build.Framework.MessageImportance.High);
+            BuildEngine.LogMessageEvent(buildMessageEventArgs);
 
             var stopwatch = Stopwatch.StartNew();
 
