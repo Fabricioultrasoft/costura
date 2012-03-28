@@ -62,7 +62,7 @@ static class ILTemplateWithTempAssembly
             if (pdbStream != null)
             {
                 var pdbData = ReadStream(pdbStream);
-                var pdbTempFilePath = Path.Combine(tempBasePath, string.Concat(prefix, ".dll"));
+                var pdbTempFilePath = Path.Combine(tempBasePath, string.Concat(prefix, ".pdb"));
                 var assemblyPdbTempFilePath = Path.Combine(tempBasePath, pdbTempFilePath);
                 File.WriteAllBytes(assemblyPdbTempFilePath, pdbData);
             }
