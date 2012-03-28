@@ -5,7 +5,7 @@
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7749C02C-F0AF-4D45-8577-DA36D2A73FCC}</ProjectGuid>
+    <ProjectGuid>{12C6D2FE-50CB-45C6-8E08-275777096070}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WpfApplication</RootNamespace>
@@ -78,6 +78,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <UsingTask TaskName="Costura.EmbedTask" AssemblyFile="$(SolutionDir)ForSample\Costura.dll" />
   <Target Name="AfterBuild">
-    <Costura.EmbedTask />
+    <Costura.EmbedTask CreateTemporaryAssemblies="true" />
   </Target>
 </Project>

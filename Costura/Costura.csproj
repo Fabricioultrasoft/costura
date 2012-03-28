@@ -104,6 +104,7 @@
     <Exec Command="&quot;$(SolutionDir)Tools\ilmerge.exe&quot; /out:&quot;$(TargetDir)Merged\$(TargetFileName)&quot; &quot;$(TargetPath)&quot; @(IlmergeAssemblies->'&quot;%(FullPath)&quot;', ' ') /target:library /keyfile:&quot;$(SolutionDir)key.snk&quot; /targetplatform:v4,C:\Windows\Microsoft.NET\Framework\v4.0.30319" />
     <MakeDir Directories="$(SolutionDir)ForSample" />
     <Copy SourceFiles="$(TargetDir)Merged\$(TargetName).dll" DestinationFolder="$(SolutionDir)ForSample" />
+    <Copy SourceFiles="$(TargetDir)Merged\$(TargetName).pdb" DestinationFolder="$(SolutionDir)ForSample" />
   </Target>
   <UsingTask TaskName="PepitaGet.RestorePackagesTask" AssemblyFile="$(SolutionDir)Tools\PepitaGet.dll" />
   <Target Name="BeforeBuild">

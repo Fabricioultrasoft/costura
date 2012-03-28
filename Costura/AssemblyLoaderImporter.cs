@@ -90,48 +90,39 @@ public class AssemblyLoaderImporter
 
     MethodDefinition CopyMethod(MethodDefinition templateMethod)
     {
+        var returnType = Resolve(templateMethod.ReturnType);
+        var newMethod = new MethodDefinition(templateMethod.Name, templateMethod.Attributes, returnType)
+                            {
+                                IsPInvokeImpl = templateMethod.IsPInvokeImpl,
+                                IsPreserveSig = templateMethod.IsPreserveSig,
+                            };
         if (templateMethod.IsPInvokeImpl)
         {
-            var newMethod = new MethodDefinition(templateMethod.Name, templateMethod.Attributes,
-                                                 Resolve(templateMethod.ReturnType));
-
             var moduleRef = new ModuleReference(templateMethod.PInvokeInfo.Module.Name);
             moduleReader.Module.ModuleReferences.Add(moduleRef);
-
             newMethod.PInvokeInfo = new PInvokeInfo(templateMethod.PInvokeInfo.Attributes, templateMethod.PInvokeInfo.EntryPoint, moduleRef);
-            newMethod.IsPInvokeImpl = true;
-            foreach (var parameterDefinition in templateMethod.Parameters)
-            {
-                newMethod.Parameters.Add(new ParameterDefinition(Resolve(parameterDefinition.ParameterType)));
-            }
-
-            targetType.Methods.Add(newMethod);
-            return newMethod;
         }
-        else
-        {
-            var newMethod = new MethodDefinition(templateMethod.Name, templateMethod.Attributes, Resolve(templateMethod.ReturnType))
-                                {
-                                    Body =
-                                        {
-                                            InitLocals = true
-                                        }
-                                };
 
+
+        if (templateMethod.Body != null)
+        {
+            newMethod.Body.InitLocals = templateMethod.Body.InitLocals;
             foreach (var variableDefinition in templateMethod.Body.Variables)
             {
                 newMethod.Body.Variables.Add(new VariableDefinition(Resolve(variableDefinition.VariableType)));
             }
-            foreach (var parameterDefinition in templateMethod.Parameters)
-            {
-                newMethod.Parameters.Add(new ParameterDefinition(Resolve(parameterDefinition.ParameterType)));
-            }
-
             CopyInstructions(templateMethod, newMethod);
             CopyExceptionHandlers(templateMethod, newMethod);
-            targetType.Methods.Add(newMethod);
-            return newMethod;
+
         }
+        foreach (var parameterDefinition in templateMethod.Parameters)
+        {
+            newMethod.Parameters.Add(new ParameterDefinition(Resolve(parameterDefinition.ParameterType)));
+        }
+
+        
+        targetType.Methods.Add(newMethod);
+        return newMethod;
     }
 
     void CopyExceptionHandlers(MethodDefinition templateMethod, MethodDefinition newMethod)
