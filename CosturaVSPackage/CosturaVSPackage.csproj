@@ -130,6 +130,8 @@
     <Compile Include="CurrentVersion.cs" />
     <Compile Include="Defaulter.cs" />
     <Compile Include="DisableMenuConfigure.cs" />
+    <Compile Include="MSBuildKiller.cs" />
+    <Compile Include="ProcessExtensions.cs" />
     <Compile Include="Wpf\EnumBooleanConverter.cs" />
     <Compile Include="ErrorDisplayer.cs" />
     <Compile Include="ExceptionDialog.cs" />
