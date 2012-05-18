@@ -5,3 +5,6 @@ _ReSharper*
 *.user
 *.suo
 ForSample/
+syntax: glob
+NuGetBuild/*
+Packages/*
